@@ -121,6 +121,22 @@
 \pgfdeclareimage[mask=tu,width=0.6cm]{tu-logo}{beamer-tu-logo}
 \pgfdeclareimage[mask=ur,width=1cm]{ur-logo}{beamer-ur-logo}
 
+\AtBeginSection[] % TOC before each section
+{
+ \begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents[currentsection]
+ \end{frame}
+}
+
+\AtBeginSubsection[] % TOC before each section
+{
+ \begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents[currentsubsection]
+ \end{frame}
+}
+
 \begin{document}
 \boldmath
 \begin{frame}
@@ -140,52 +156,97 @@
 \includegraphics[width=8cm]{djund_solu.pdf}
 }
 
-Trouver le trajet le plus court dans ce réseau, i.e. {\red la $s$-$t$ chaîne de plus petit poids} dans ce graphe.
+Trouver le chemin le plus court dans ce réseau,\\
+ i.e. {\red le $s$-$t$ chemin de coût minimal} dans ce graphe.
 
 
 
-\only<2>{
-Solution : poids minimal = 15
+\visible<2>{
+Solution en bleu et coût minimal = 15
 }
+\end{frame}
+
+
+
+\begin{frame}\frametitle{Définition}
+
+Problème du plus court chemin :\\
+\medskip
+Étant donné un graphe $G=(V,E)$ et une fonction de coût $c : E \to \mathbb{Q}$,\\
+Trouver un $o$-$d$ chemin {\red simple} $P$ de coût minimal $\sum_{e \in P}c(e)$
+\pause
+
+\bigskip
+
+Rappel : 
+\begin{itemize}
+\item
+un chemin {\red simple} visite chaque arc/arête au plus une fois
+\pause
+\item 
+un chemin élémentaire visite chaque sommets au plus une fois
+\end{itemize}
+
 \end{frame}
 
 
 
 \begin{frame}\frametitle{Cas général : Difficile !}
 
-Problème du plus court chemin :
-
 \begin{thm} 
-Trouver le poids minimal d'un $s$-$t$ chemin élémentaire lorsque le graphe a des poids quelconques est {\bf NP}-difficile.
+Trouver le poids minimal d'un $o$-$d$ chemin élémentaire lorsque le graphe $G=(V,E)$ a des poids quelconques est {\bf NP}-difficile.
 \end{thm}
 
 \bigskip
+\pause
+Preuve:
+Réduire au problème du plus court chemin élementaire.\\
+\pause
+\medskip
+Réduire au problème de chemin hamiltonien :\\
+\pause
+\medskip
+Prendre $c(e)=-1$ pour tout $e \in E$
+\\
+\medskip
+\pause
+Il existe un chemin hamiltonien\\
+ssi le coût minimal est égal à $-(\operatorname{card}(V)-1)$
 
-Contient le problème du chemin hamiltonien.
 \end{frame}
 
 
-
-\begin{frame}\frametitle{Plan}
-\begin{enumerate}
-%\item Graphes orientés : quelques définitions.
-\item Plus courts chemins dans les graphes orientés.
-\begin{itemize}
-\item[$\red\bullet$] Tous les poids sont $\geq 0$: Dijkstra.
-\item[$\red\bullet$] Le graphe est sans circuit 
-
-%\includegraphics[width=4cm]{nocircuit.pdf}
-
-\item[$\red\bullet$] Et sinon ?
-\end{itemize}
-\item Plus courte chaîne dans les graphes non-orientés.
-\begin{itemize}
-\item[$\red\bullet$] Tous les poids sont $\geq 0$ : Encore Dijkstra.
-\item[$\red\bullet$] Et sinon ?
-\end{itemize}
-\end{enumerate}
+\begin{frame}\frametitle{Graphe non-orienté / orienté}
+\begin{center}
+\begin{tabular}{c|c}
+graphe non-orienté & graphe orienté \\
+\hline
+% $G=(V,E)$ & $D=(V,A)$ \\
+% arête & arc \\
+% chaîne & chemin \\
+% cycle & circuit \\
+\\
+\includegraphics[width=5.5cm]{djund.pdf}
+&\includegraphics[width=5.5cm]{dj.pdf}
+\end{tabular}
+\end{center}
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Réduction d'orienté à non-orienté}Réduction : \\
+\begin{center}
+\includegraphics[width=10cm]{djun_dj.pdf}
+\end{center}
+
+\pause
+\bigskip
+Peut permettre de d'utiliser des algorithmes de graphes orientés au cas non orienté
+\end{frame}
+
+\begin{frame}{Plan}
+ \tableofcontents
+\end{frame}
 
 % \begin{frame}\frametitle{}
 % \begin{center}{\huge Graphes orientés : quelques définitions }\end{center}
@@ -266,26 +327,7 @@ Contient le problème du chemin hamiltonien.
 
 % \end{frame}
 
-\begin{frame}\frametitle{Graphe non-orienté / orienté}
-\begin{center}
-\begin{tabular}{c|c}
-graphe non-orienté & graphe orienté \\
-\hline
-$G=(V,E)$ & $D=(V,A)$ \\
-arête & arc \\
-chaîne & chemin \\
-cycle & circuit \\
-
-\includegraphics[width=5.5cm]{djund.pdf}
-&\includegraphics[width=5.5cm]{dj.pdf}
-\end{tabular}
-\end{center}
-\end{frame}
-
-
-\begin{frame}\frametitle{}
-\begin{center}{\huge Plus courts chemins dans les graphes orientés}\end{center}
-\end{frame}
+\section{Coûts positifs: Dijkstra}
 
 \begin{frame}\frametitle{Tous les coûts sont $\geq 0$}
 
@@ -300,27 +342,31 @@ Exemple : Modélisation d'un réseau de transport.}
 \end{frame}
 
 
+
 \begin{frame}\frametitle{L'algorithme de Dijkstra}
 {\footnotesize
 \begin{itemize}
-\item Initialisation : $U:=V$, $\lambda(s):=0$ et $\lambda(v)=+\infty$ pour tout $v\neq s$.
+\item Initialisation : $U:=\emptyset$, $d(o):=0$ et $d(v)=+\infty$ pour tout $v\neq o$.
 \bigskip
 
-\item Répéter 
+\item Tant que $V\backslash U\neq \emptyset$
 \begin{enumerate}
-\item Choisir $u$ minimisant $\lambda(u)$ dans $U$. 
-
-\item Pour chaque $a=(u,v)\in A$ tq $\lambda(v)>\lambda(u)+c(a)$, redéfinir $\lambda(v):=\lambda(u)+c(a)$. 
-
-\item Redéfinir $U:=U\setminus\{u\}$.
+\item Choisir $v$ minimisant $d(v)$ dans $V\backslash U$. 
+\item $U:=U\cup \{ v\}$.
+\item Pour chaque $a=(u,v)\in A$\\
+		\begin{itemize}
+		\item $d(v):=\min[d(v),d(u)+c(a)]$. 
+		\end{itemize}
 \end{enumerate}
-\bigskip
-\item Arrêt qd $\lambda(u)=+\infty$ pour tout $u\in U$ (en particulier arrêt si $U=\varnothing$).
+%\bigskip
+%\item Arrêt qd $\lambda(u)=+\infty$ pour tout $u\in U$ (en particulier arrêt si $U=\varnothing$).
 \end{itemize}}
 \end{frame}
 
 \begin{frame}\frametitle{Exemple d'application}
 \centering
+
+\includegraphics[height=4cm]{dj.pdf}
 ${\small \begin{array}{cccccccc}s & a & b & c & d & e & f & t
 \\ 
 \hline (0) & (\infty) & (\infty) & (\infty) & (\infty) & (\infty) & (\infty) & (\infty) \\ 
@@ -342,19 +388,96 @@ ${\small \begin{array}{cccccccc}s & a & b & c & d & e & f & t
 \begin{frame}\frametitle{L'algorithme de Dijkstra}
 
 
- Algorithme peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le poids minimum)
+Peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le poids minimum)
  
  \bigskip
+
+ \pause
+  \bigskip
+Fonctionne sur les graphes non-orientés (cf réduction précédente)
+
+ \pause
   \bigskip
 
-\begin{thm}
-Etant donné un graphe orienté $D=(V,A)$, deux sommets $s,t$ et une fonction de poids $w:A\rightarrow\mathbb{R}_+$, un $s$-$t$ chemin de plus petit poids peut être trouvé en $O(n^2)$.
-\end{thm} 
-
+Converge en $O(m+n log(n))$ avec\\
+$n$: nombre de sommets\\
+$m$: nombres d'arcs
 
  
 
 \end{frame}
+
+\section{Programmation Dynamique Ford-Bellman}
+
+\subsection{L'algorithme de Ford-Bellman}
+
+\begin{frame}\frametitle{L'idée de Bellman}
+
+Principe d'optimalité de Bellman\\
+\pause
+La sous-trajectoire d'une trajectoire optimale est encore optimale:
+
+ \begin{proposition}[5.2]
+  Soit $P$ un $o$-$v$ chemin avec $k$ arcs et $Q$ son sous-$o$-$u$ chemin, pù $u$ iest le sommet avant $v$ dans $P$. Si $P$ est le plus petit $o -v$ chemin parmie ceux à $k$ arcs, alors $Q$ est le plus petit $o$-$u$ parmi ceux à $k-1$ arcs.
+ \end{proposition}
+ \vfill
+ \pause
+ Preuve:
+  \begin{itemize}
+   \item Par l'absurde soit $Q'$ $o$-$u$ chemin avec $k-1$ arcs tel que $c(Q') < c(Q)$. 
+   \pause
+   \item $P' = Q' \cup (u, v)$ est un $o$-$v$ chemin avec $k$ arcs.
+   \pause
+   \item $c(P') = c(Q') + c(u, v) < c(Q) + c(u, v) = c(P)$. \qedhere
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Ford-Bellman algorithm}
+ Le coût minimal $f(v,k)$ d'un $o$-$v$
+  chemin  à $k$ arcs vérifie l'équation de Bellman
+ \begin{align*}
+  f(v, k+1) & = \min_{u \in N^-(v)} f(u, k-1) + c(u, v) \\
+  f(v, 0) & = \begin{cases}
+   0        & \text{if $v = o$} \\
+   + \infty & \text{otherwise}  
+  \end{cases}                 
+ \end{align*}
+  \pause
+ On peut calculer récursivement à partir de $k=0$. 
+ \pause
+ Critère d'arrêt ?
+ \vfill
+ Solution: \\
+Besoin d'ajouter une hypothèse : le graphe $G$ n'a pas de cycles négatifs.
+
+\vfill
+\pause
+S'il $G$ n'a pas de cycles négatifs, il y a un plus court chemin élémentaire de longueur au plus $n-1$.
+\end{frame}
+
+
+\begin{frame}\frametitle{Exemple d'application}
+\centering
+
+\includegraphics[height=4cm]{dj.pdf}
+${\small \begin{array}{c|cccccccc} k & s & a & b & c & d & e & f & t
+\\ 
+\hline 0 &0 &\infty & \infty & \infty & \infty & \infty & \infty & \infty  \\ 
+\visible<2-9>{1& \infty & 3 & \infty & \infty & 3 & \infty &  5 & \infty \\}
+\visible<3-9>{2 & \infty & \infty & 5 & \infty & 8 & 7 & \infty & \infty \\}
+\visible<4-9>{3 & \infty& \infty  & 9 & 5 & 8 & \infty & \infty & 9 \\}
+\visible<5-9>{4 &
+0 & 3 & 4 & (5) & 3 & (\infty) & (5) & (\infty) \\}
+\visible<6-9>{5 &0 & 3 & 4 & 5 & 3 & (8) & (5) & (\infty) \\}
+\visible<7-9>{
+6 & 0 & 3 & 4 & 5 & 3 & (7) & 5 & (12) \\}
+\visible<8-9>{
+7 & 0 & 3 & 4 & 5 & 3 & 7 & 5 & (9) \\}
+\visible<9>{8& & 3 & 4 & 5 & 3 & 7 & 5 & 9}
+\end{array}}$
+\end{frame}
+
 
 \begin{frame}\frametitle{Un graphe sans circuit}
 \includegraphics[width=10cm]{exacirc.pdf}
@@ -426,16 +549,7 @@ Equation de Bellman ${\bf\red \rightarrow}$ algorithme.
  Graphe acircuitique ${\bf\red \rightarrow}$ il y a toujours un sommet $v$ dont on connaît tous les prédécesseurs.}
 \end{frame}
 
-\begin{frame}\frametitle{L'idée de Bellman}
 
-Principe d'optimalité de Bellman
-
-\bigskip
-
-\begin{quote}
-La sous-trajectoire d'une trajectoire optimale est encore optimale.
-\end{quote}
-\end{frame}
 
 \begin{frame}\frametitle{Algorithme}
  Algorithme peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le poids minimum)
@@ -531,26 +645,26 @@ Etant donné un graphe $D=(V,A)$, deux sommets $s,t$ et une fonction de poids $w:
 \end{frame}
 
 
-\begin{frame}\frametitle{Tous les poids sont $\geq 0$}
+% \begin{frame}\frametitle{Tous les poids sont $\geq 0$}
 
-\begin{itemize}
+% \begin{itemize}
 
-\item Si tous les poids sont $\geq 0$, on applique encore Dijkstra.
+% \item Si tous les poids sont $\geq 0$, on applique encore Dijkstra.
 
-\bigskip
+% \bigskip
 
-\item Transformation : \includegraphics[width=7cm]{djun_dj.pdf}
+% \item 
 
-\bigskip
+% \bigskip
 
-\item Les plus courtes chaînes élémentaires correspondent aux plus courts chemins élémentaires.
+% \item Les plus courtes chaînes élémentaires correspondent aux plus courts chemins élémentaires.
 
-\bigskip
+% \bigskip
 
-\item Donne exactement le même algorithme.
-\end{itemize}
+% \item Donne exactement le même algorithme.
+% \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 \begin{frame}\frametitle{S'il y a des poids $\leq 0$}
 
@@ -576,14 +690,6 @@ ne permet pas de se ramener au cas orienté
 
 \end{frame}
 
-
-\begin{frame}\frametitle{Cas général}
-
-\begin{thm} 
-Trouver la $s$-$t$ chaîne élémentaire de poids minimum lorsque le graphe a des poids quelconques est {\bf NP}-difficile.
-\end{thm}
-
-\end{frame}
 
 \begin{frame}\frametitle{Résumé}
 {\small \begin{tabular}{c|c}

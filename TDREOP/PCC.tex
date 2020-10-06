@@ -173,7 +173,7 @@ Solution en bleu et coût minimal = 15
 Problème du plus court chemin :\\
 \medskip
 Étant donné un graphe $G=(V,E)$ et une fonction de coût $c : E \to \mathbb{Q}$,\\
-Trouver un $o$-$d$ chemin {\red simple} $P$ de coût minimal $\sum_{e \in P}c(e)$
+Trouver un $o$-$d$ chemin \only<2>{{\red simple}} \only<3>{{\blue élémentaire}} $P$ de coût minimal $\sum_{e \in P}c(e)$
 \pause
 
 \bigskip
@@ -184,7 +184,7 @@ Rappel :
 un chemin {\red simple} visite chaque arc/arête au plus une fois
 \pause
 \item 
-un chemin élémentaire visite chaque sommets au plus une fois
+un  chemin {\blue élémentaire} visite chaque sommets au plus une fois
 \end{itemize}
 
 \end{frame}
@@ -363,7 +363,7 @@ Exemple : Modélisation d'un réseau de transport.}
 \end{itemize}}
 \end{frame}
 
-\begin{frame}\frametitle{Exemple d'application}
+\begin{frame}\frametitle{Exemple : Dijkstra}
 \centering
 
 \includegraphics[height=4cm]{dj.pdf}
@@ -388,7 +388,7 @@ ${\small \begin{array}{cccccccc}s & a & b & c & d & e & f & t
 \begin{frame}\frametitle{L'algorithme de Dijkstra}
 
 
-Peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le poids minimum)
+Peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le coût minimum)
  
  \bigskip
 
@@ -403,7 +403,6 @@ Converge en $O(m+n log(n))$ avec\\
 $n$: nombre de sommets\\
 $m$: nombres d'arcs
 
- 
 
 \end{frame}
 
@@ -433,7 +432,7 @@ La sous-trajectoire d'une trajectoire optimale est encore optimale:
 
 \end{frame}
 
-\begin{frame}{Ford-Bellman algorithm}
+\begin{frame}{Algorithme de Ford-Bellman}
  Le coût minimal $f(v,k)$ d'un $o$-$v$
   chemin  à $k$ arcs vérifie l'équation de Bellman
  \begin{align*}
@@ -457,270 +456,74 @@ S'il $G$ n'a pas de cycles négatifs, il y a un plus court chemin élémentaire de 
 \end{frame}
 
 
-\begin{frame}\frametitle{Exemple d'application}
+\begin{frame}\frametitle{Exemple : Ford-Bellman}
 \centering
 
-\includegraphics[height=4cm]{dj.pdf}
+\includegraphics[height=5cm]{dj.pdf}
 ${\small \begin{array}{c|cccccccc} k & s & a & b & c & d & e & f & t
 \\ 
 \hline 0 &0 &\infty & \infty & \infty & \infty & \infty & \infty & \infty  \\ 
-\visible<2-9>{1& \infty & 3 & \infty & \infty & 3 & \infty &  5 & \infty \\}
-\visible<3-9>{2 & \infty & \infty & 5 & \infty & 8 & 7 & \infty & \infty \\}
-\visible<4-9>{3 & \infty& \infty  & 9 & 5 & 8 & \infty & \infty & 9 \\}
-\visible<5-9>{4 &
-0 & 3 & 4 & (5) & 3 & (\infty) & (5) & (\infty) \\}
-\visible<6-9>{5 &0 & 3 & 4 & 5 & 3 & (8) & (5) & (\infty) \\}
-\visible<7-9>{
-6 & 0 & 3 & 4 & 5 & 3 & (7) & 5 & (12) \\}
-\visible<8-9>{
-7 & 0 & 3 & 4 & 5 & 3 & 7 & 5 & (9) \\}
-\visible<9>{8& & 3 & 4 & 5 & 3 & 7 & 5 & 9}
+\visible<2-6>{1& \infty & 3 & \infty & \infty & 3 & \infty &  5 & \infty \\}
+\visible<3-6>{2 & \infty & \infty & 5 & \infty & 8 & 7 & \infty & \infty \\}
+\visible<4-6>{3 & \infty& \infty  & 9 & 5 & 8 & \infty & \infty & 9 \\}
+\visible<5-6>{4 &
+\infty & \infty & 9 & 6 & \infty & 8 & \infty & 9 \\}
+\visible<6>{5 &\infty & \infty & 9 & 10 & 9 & 10 & \infty & 11}
 \end{array}}$
 \end{frame}
 
 
-\begin{frame}\frametitle{Un graphe sans circuit}
-\includegraphics[width=10cm]{exacirc.pdf}
-\end{frame}
 
 
 
-\begin{frame}\frametitle{Equation de Bellman}
-
-Posons pour tout sommet $v$
-$$\lambda(v):=\mbox{ poids minimum d'un $s$-$v$ chemin}$$
-
-{\scriptsize ($\lambda(v):=\infty$ si un tel chemin n'existe pas)}
-
-\bigskip
 
 
-
-Alors (équation de Bellman)
-$$
-\lambda(v)=\min_{(u,v)\in A}(\lambda(u)+w(u,v))
-$$
-
-\bigskip
-\bigskip
-
-{\scriptsize\em
-``Le plus court chemin de $s$ à $v$ est le plus court chemin de $s$ à un antécédent $u$ de $v$ auquel on a ajouté le dernier arc $(u,v)$.''}
-\end{frame}
-
-\begin{frame}\frametitle{Suite de l'exemple}
-\includegraphics[width=10cm]{exacirc_bad.pdf}
-\end{frame}
-
-\begin{frame}\frametitle{Suite de l'exemple}
-\includegraphics[width=10cm]{exacirc_good.pdf}
-\end{frame}
+\begin{frame}\frametitle{L'algorithme de Ford-Bellman}
 
 
-
-\begin{frame}\frametitle{L'algorithme}
-
-{\footnotesize
-Equation de Bellman ${\bf\red \rightarrow}$ algorithme. 
-\bigskip
-\bigskip
-
-\begin{itemize}
-\item Initialisation $\lambda(s):=0$ et $\lambda(u):=\infty$ pour tout $u$ tel qu'il n'existe pas de $s$-$u$ chemin. 
-
-\bigskip
-
-\item Répéter
-\begin{enumerate}
-\item Chercher $v$ dont on connaît $\lambda(u)$ pour tous les prédécesseurs $u$.
-
-\item $\lambda(v):=\min_{(u,v)\in A}(\lambda(u)+w(u,v))$ {\scriptsize (équation de Bellman)}
-\end{enumerate}
-
-\bigskip
-
-\item Arrêt quand $\lambda$ calculé pour tous les sommets.
-
-\end{itemize}
-
-\bigskip
-\bigskip
-
- Graphe acircuitique ${\bf\red \rightarrow}$ il y a toujours un sommet $v$ dont on connaît tous les prédécesseurs.}
-\end{frame}
-
-
-
-\begin{frame}\frametitle{Algorithme}
- Algorithme peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le poids minimum)
+Peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le coût minimum)
  
-\bigskip\bigskip 
- 
-\begin{thm}
-Etant donné un graphe acircuitique $D=(V,A)$, deux sommets $s,t$ et une fonction de poids $w:A\rightarrow\mathbb{R}$, un $s$-$t$ chemin de plus petit poids peut être trouvé en $O(m)$. 
-\end{thm}
+ \bigskip
 
-\bigskip
+ \pause
+  \bigskip
+Pas de généralisation triviale aux graphes non-orientés (la réduction crée des cycles négatifs)
 
-Poids peuvent être positifs et négatifs ($\neq$ Dijkstra).
+ \pause
+  \bigskip
 
-\bigskip
-
-On peut donc également trouver {\red le plus long chemin élémentaire}.
-\end{frame}
-
-
-
-
-\begin{frame}\frametitle{Poids quelconques, pas forcément acircuitique}
-
-Poids quelconques, et il peut y avoir des circuits : algorithme polynomial si le graphe est {\blue sans circuit absorbant}.
-
-\bigskip
-
-Circuit absorbant = circuit dont la somme des poids $< 0$.
-
-\bigskip
-
-Equation de Bellman.
-\end{frame}
-
-
-\begin{frame}\frametitle{Pas de circuit absorbant : équation de Bellman}
-$\lambda(k,v):=\mbox{ poids minimum d'un $s$-$v$ chemin traversant exactement $k$ arcs.}$ 
-
-\bigskip
-\bigskip
-
-Equation de Bellman :
-$$
-\lambda(k+1,v)=\min_{(u,v)\in A}(\lambda(k,u)+w(u,v))
-$$
-pour tout $v\in V$. 
-\end{frame}
-
-\begin{frame}\frametitle{L'algorithme}
-
-{\footnotesize
-Equation de Bellman ${\bf\red \rightarrow}$ algorithme. 
-\bigskip
-\bigskip
-
-\begin{itemize}
-\item Initialisation $\lambda(0,s):=0$, $\lambda(0,v):=+\infty$ pour $v\neq s$ et $k:=0$.
-
-\bigskip
-
-\item Répéter tant que $k\leq |V|-1$
-\begin{enumerate}
-
-\item Pour tout $v$, faire $\lambda(k+1,v):=\min_{(u,v)\in A}(\lambda(k,u)+w(u,v))$ {\scriptsize (équation de Bellman)}
-
-\item $k:=k+1$
-\end{enumerate}
-
-\bigskip
-
-\item Renvoyer $\min_{k=1,\ldots,|V|-1}\lambda(k,t)$.
-
-\end{itemize} }
+Converge en $O(mn)$ avec\\
+$n$: nombre de sommets\\
+$m$: nombres d'arcs
 
 
 \end{frame}
 
-\begin{frame}\frametitle{Pas de circuit absorbant}
+\subsection{Graphes acycliques : ordre topologique}
+\begin{frame}\frametitle{L'idée de Bellman}
 
- Algorithme peut être facilement adapté pour calculer le chemin lui-même (et pas seulement le poids minimum)
- 
-\bigskip\bigskip 
- 
-\begin{thm}
-Etant donné un graphe $D=(V,A)$, deux sommets $s,t$ et une fonction de poids $w:A\rightarrow\mathbb{R}$ telle qu'il n'y ait pas circuit absorbant, un $s$-$t$ chemin de plus petit poids peut être trouvé en $O(nm)$. 
-\end{thm}  
+Principe d'optimalité de Bellman\\
+\pause
+La sous-trajectoire d'une trajectoire optimale est encore optimale:
+
+ \begin{proposition}[5.4]
+  Soit $G$ un graphe orienté acylique, $P$ un $o$-$v$ chemin et $Q$ son sous-$o$-$u$ chemin, où $u$ est le sommet avant $v$ dans $P$.\\
+  Si $P$ est le plus petit $o$-$v$ chemin,\quad
+  alors $Q$ est le plus petit $o$-$u$ chemin.
+ \end{proposition}
+ \vfill
+ \pause
+ L'équation de Bellman devient 
+$f(v)=\min_{u \in N^-(v)} f(u)+c(u,v)$
+\vfill
+\pause
+Calculer tous les $f(v)$ par récurrence :\\
+
+C'est possible selon un ordre dit topologique $\preceq$
+tel que $(u,v) \in A \Rightarrow u\preceq v$
 \end{frame}
 
 
-\begin{frame}\frametitle{}
-\begin{center}{\huge Plus courte chaîne dans les graphes non-orientés}\end{center}
-\end{frame}
-
-
-% \begin{frame}\frametitle{Tous les poids sont $\geq 0$}
-
-% \begin{itemize}
-
-% \item Si tous les poids sont $\geq 0$, on applique encore Dijkstra.
-
-% \bigskip
-
-% \item 
-
-% \bigskip
-
-% \item Les plus courtes chaînes élémentaires correspondent aux plus courts chemins élémentaires.
-
-% \bigskip
-
-% \item Donne exactement le même algorithme.
-% \end{itemize}
-
-% \end{frame}
-
-\begin{frame}\frametitle{S'il y a des poids $\leq 0$}
-
-S'il y a des poids $\leq 0$, mais pas de cycle absorbant : on peut encore y arriver en temps polynomial.
-
-
-\bigskip
-\bigskip
-
-Outils seront vus lors de la séance ``Tournée''.
-
-
-
-\bigskip
-\bigskip
-{\footnotesize
-{\red ATTENTION} : transfomation
-
-\includegraphics[width=7cm]{djun_dj.pdf} 
-
-ne permet pas de se ramener au cas orienté
-(toute arête de poids négatif fait apparaître un circuit absorbant)}
-
-\end{frame}
-
-
-\begin{frame}\frametitle{Résumé}
-{\small \begin{tabular}{c|c}
-
-& Complexité \\
-\hline
-Graphe orienté,& $O(n^2)$  \\
- poids positifs  & (Dijkstra)\\
-\hline
-Graphe orienté,   & $O(m)$  \\ 
-poids quelconques, acircuitique & (Programmation
-dynamique)\\
-
-\hline
-Graphe orienté,  & $O(nm)$  \\  
-poids quelconques, & (Programmation
-dynamique, \\
-
-sans circuit absorbant &  algorithme de Ford-Bellman) \\
-\hline
-Graphe orienté,  & {\bf NP}-difficile \\
-poids quelconques & \\
-\hline\hline
-Graphe non-orienté,  & $O(n^2)$  \\ poids positifs & (Dijkstra) \\
-\hline
-Graphe non-orienté,   & $O(n^3)$ \\ poids quelconques, & (voir Séance Tournées)\\
-pas de cycle absorbant & \\
-\hline Graphe non-orienté, & {\bf NP}-difficile \\
- poids quelconques  &
-\end{tabular}}
-\end{frame}
 
 
 \begin{frame}\frametitle{Programmation dynamique}
@@ -758,14 +561,14 @@ peut se résoudre par la {\blue programmation dynamique}.}
 \end{frame}
 
 \begin{frame}\frametitle{Programmation dynamique}
-$\lambda(k,x):=$ coût minimal de la trajectoire amenant le système dans l'état $x$ en $k$ étapes.
+$V(k,x):=$ coût minimal de la trajectoire amenant le système dans l'état $x$ en $k$ étapes.
 
 \bigskip
 \bigskip
 
 Programmation dynamique : équation de Bellman pour tout $y$
 
-$$\lambda(k,y)=\min_{x\in X_{k-1}}(\lambda(k-1,x)+c_{k-1}(x,y))$$
+$$V(k,y)=\min_{x\in X_{k-1}}(V(k-1,x)+c_{k-1}(x,y))$$
 
 \bigskip
 \bigskip
@@ -860,5 +663,42 @@ Si plusieurs états de départ ou plusieurs états à l'arrivée, on peut ajouter des
 \begin{frame}\frametitle{Programmation dynamique $=$ plus court chemin}
 \includegraphics[width=10cm]{illustrdyn_opt_truc.pdf}
 \end{frame}
+
+
+
+\section{Complexité résumé}
+\begin{frame}\frametitle{Complexité : Résumé}
+\centering
+{\small \begin{tabular}{c|c}
+
+& Complexité \\
+\hline
+Graphe orienté,& $O(m+nlog(n))$  \\
+ $c(a)\geq 0$  & (Dijkstra)\\
+\hline
+Graphe orienté,   & $O(m)$  \\ 
+acyclique & (Programmation
+dynamique)\\
+
+\hline
+Graphe orienté  & $O(nm)$  \\  
+sans cycle & (Programmation
+dynamique, \\
+
+ absorbant &   Ford-Bellman) \\
+\hline
+Graphe orienté  & {\bf NP}-difficile \\
+ & \\
+\hline\hline
+Graphe non-orienté,  & $O(m+nlog(n))$ \\ 
+$c(a)\geq 0$ & (Dijkstra) \\
+\hline
+Graphe non-orienté,   & $O(n^3)$ \\ sans cycle absorbant & (plus compliqué)\\
+
+\hline Graphe non-orienté & {\bf NP}-difficile \\
+  &
+\end{tabular}}
+\end{frame}
+
 
 \end{document}

@@ -560,15 +560,16 @@ peut se résoudre par la {\blue programmation dynamique}.}
 
 \end{frame}
 
+\subsection{Programmation dynamique : cas général}
 \begin{frame}\frametitle{Programmation dynamique}
-$V(k,x):=$ coût minimal de la trajectoire amenant le système dans l'état $x$ en $k$ étapes.
+$V(t,x):=$ coût minimal future lorsqu'on est dans l'état $x$ à l'étape $t$.
 
 \bigskip
 \bigskip
 
 Programmation dynamique : équation de Bellman pour tout $y$
 
-$$V(k,y)=\min_{x\in X_{k-1}}(V(k-1,x)+c_{k-1}(x,y))$$
+$$V(t,x)=\min_{y\in X_{k+1}}(c_t(x,y)+V(t+1,y))$$
 
 \bigskip
 \bigskip
@@ -579,27 +580,27 @@ Algorithme : calculer de proche en proche
 
 
 \begin{frame}\frametitle{Gestion de stock}
-Dynamique d'un stock : $x_{k+1}=x_k-d_k+u_k$, 
+Dynamique d'un stock : $x_{t+1}=x_t-d_t+u_t$, 
 
 \bigskip
 
-$d_k$ : demande pour la période $k$ (supposée connue) 
+$d_t$ : demande pour la période $t$ (supposée connue) 
 
-$x_k\in\mathbb{Z}$ : nombre d'unités disponibles en début de période $k$ 
+$x_t\in\mathbb{Z}$ : nombre d'unités disponibles en début de période $t$ 
 
-$u_k$ : nombre d'unités commandées (et reçues immédiatement) en début de période $k$ 
+$u_t$ : nombre d'unités commandées (et reçues immédiatement) en début de période $t$ 
 
 $K$ : capacité maximale de stockage
 
-$c(u_k)+g(x_{k+1})$ : coût de gestion de stock pour la période $k$ en
+$c(u_t)+g(x_{t+1})$ : coût de gestion de stock pour la période $t$ en
 \begin{itemize}
-\item $c(u_k)$ coût de réapprovisionnement
-\item  $g(x_{k+1})$ coût de stockage ou coût de pénurie 
+\item $c(u_t)$ coût de réapprovisionnement
+\item  $g(x_{t+1})$ coût de stockage ou coût de pénurie 
 \end{itemize}
 
 \bigskip
 
-{\red Objectif.} Minimiser $\sum_{k=0}^{N-1}c(u_k)+g(x_{k+1}).$ 
+{\red Objectif.} Minimiser $\sum_{t=0}^{T-1}c(u_t)+g(x_{t+1}).$ 
 
 \end{frame}
 
@@ -608,25 +609,25 @@ Modélisation par la programmation dynamique
 
 \bigskip
 
-{\red périodes} : périodes $k=1,\ldots, N$
+{\red périodes} : périodes $t=1,\ldots, T$
 
 \bigskip
 
-{\red états} : valeurs possibles $x_k$ de niveau de stock, 
+{\red états} : valeurs possibles $x_t$ de niveau de stock, 
 
 \bigskip
 
-{\red transitions} : $x_k\rightarrow x_{k+1}$ tq $x_{k+1}$ satisfasse simultanément $x_{k+1}\in\mathbb{Z}$, $x_{k+1}+d_k\leq K$ et $x_{k+1}\geq x_k-d_k$ 
+{\red transitions} : $x_t\rightarrow x_{t+1}$ tq $x_{t+1}$ satisfasse simultanément $x_{t+1}\in\mathbb{Z}$, $x_{t+1}+d_t\leq K$ et $x_{t+1}\geq x_t-d_t$ 
 
 \bigskip
 
 
-{\red coût de la transition} : $x_k\rightarrow x_{k+1}$ est $c(x_{k+1}-x_k+d_k)+g(x_{k+1})$
+{\red coût de la transition} : $x_t\rightarrow x_{t+1}$ est $c(x_{t+1}-x_t+d_t)+g(x_{t+1})$
 
 \bigskip
 \bigskip
 
-{\red Objectif.} Minimiser $\sum_{k=0}^{N-1}c(x_{k+1}-x_k+d_k)+g(x_{k+1})$  (critère additif = somme des coûts des transitions de la trajectoire).
+{\red Objectif.} Minimiser $\sum_{t=0}^{N-1}c(x_{t+1}-x_t+d_t)+g(x_{t+1})$  (critère additif = somme des coûts des transitions de la trajectoire).
 
 \end{frame}
 
@@ -638,7 +639,7 @@ Programmation dynamique = plus court chemin dans un graphe acircuitique
 \bigskip
 
 \begin{center}
-\begin{tabular}{c|c}Prog. dyn. & Plus court $s$-$t$ chemin\\
+\begin{tabular}{c|c}Prog. dyn. & Plus court $o$-$d$ chemin\\
 \hline
 états $\times$ périodes & sommets \\
 transitions & arcs \\
@@ -648,7 +649,7 @@ trajectoire optimale & plus court chemin
 \end{tabular}
 \end{center}
 
-Si plusieurs états de départ ou plusieurs états à l'arrivée, on peut ajouter des sommets fictifs $s$ et $t$, et des transitions de coût $=0$.
+Si plusieurs états de départ ou plusieurs états à l'arrivée, on peut ajouter des sommets fictifs $o$ et $d$, et des transitions de coût $=0$.
 
 \end{frame}
 

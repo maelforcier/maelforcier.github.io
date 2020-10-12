@@ -1,0 +1,464 @@
+\documentclass{beamer}
+
+\usepackage{config_latex/mypackages}
+\usepackage{config_latex/mypackages_beamer}
+%\input{config_latex/mynotations.tex}
+
+\newcommand{\val}{\mathrm{val}}
+
+\title{Problèmes de flots}
+\author[Maël Forcier]{Maël Forcier}
+\institute[REOP 2020]{REOP 2020}
+\date{14/10/2020}
+
+\begin{document}
+
+\begin{frame}
+ \maketitle
+\end{frame}
+
+
+
+\begin{frame}{Plan}
+ \tableofcontents
+\end{frame}
+
+\section{Flot maximal et coupe minimale}
+
+\subsection{Définitions}
+
+\begin{frame}[t]{Cadre} 
+Soit $D = (V, A)$ un graphe orienté avec : \pause
+\begin{itemize} 
+  \item sur chaque arc $a \in A$ une capacité ~$u(a) \geq 0$ \pause
+  \item deux noeuds spéciaux: une source~$s$ et un puit ~$t$ (pour target en anglais)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Définition d'un ~$s-t$ flot} \pause
+  Un~$s-t$ flot est une fonction~$f: A \longmapsto \Rr_+$ qui satisfait la loi de Kirchhoff \pause
+  \begin{align*}
+    \forall v \in V \backslash \{s, t\}, \quad \sum_{a \in \delta^-(v)} f(a) = \sum_{a \in \delta^+(v)} f(a)
+  \end{align*} \pause
+  et les contraintes de capacité \pause
+  \begin{align*}
+    \forall a \in A, \quad f(a) \leq u(a)
+  \end{align*}
+\end{frame}
+
+\begin{frame}[t]{Valeur d'un~$s-t$ flot}
+  La valeur d'un ~$s-t$ flow~$f$ est "la quantité qui sort de la source" : \pause
+  \begin{align*}
+    \val(f) = \sum_{a \in \delta^+(s)} f(a) - \sum_{a \in \delta^-(s)} f(a) 
+  \end{align*}
+  \pause
+  Exercice: Calculer un ~$s-t$ flot maximal dans le graphe suivant :
+    \begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/flow_example.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[t]{Définition d'une coupe} 
+  Une ~$s-t$ coupe ~$(S, T)$ est une partition de l'ensemble des sommets $V = S \sqcup T$ telle que ~$s \in S$ et ~$t \in T$.
+
+  \pause
+  
+  
+  La capacité d'une coupe est la somme des capacités des arcs qui la traversent : \pause
+  \begin{align*}
+    u(S, T) = \sum_{\substack{i \in S,~ j \in T\\(i,j) \in A}} u(i,j)
+  \end{align*}
+
+   On peut aussi définir la coupe comme un ensemble d'arcs qui ~$B = \delta^+(S)$ intersectent tous les $s-t$ chemins.
+   
+  \begin{align*}
+  	u(B) = \sum_{a \in B} u(a)
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Flot maximal et coupe minimale} \pause
+  \vfill
+  \begin{exampleblock}{Problème du flot maximal}
+    Trouver un ~$s-t$ flot de valeur maximale ~$\val(f)$ 
+  \end{exampleblock}
+  \vfill \pause
+  \begin{exampleblock}{Problème de la coupe minimale}
+    Trouve une coupe ~$s-t$ de capacité minimale ~$u(B)$
+  \end{exampleblock}
+  \vfill
+\end{frame}
+
+\begin{frame}{Exercises} \pause
+  \begin{enumerate}
+    \item Battle on a network (6.18)
+    
+    \textit{\tiny A command center is located at a vertex~$p$ of a non-directed network. We know the position of subordinates modeled by a subset~$S$ of the vertices of the network. We want to destroy a minimum number of links in order to prevent any communication between the command center and the subordinates. How to solve this problem in polynomial time?}
+  \end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}[t]{Coupe et flot : majoration}
+  \begin{proposition}[6.3]
+    Soit ~$f \leq u$ un ~$s-t$ flot et ~$B$ une ~$s-t$ coupe.\\
+    Alors ~$\val(f) \leq u(B)$.
+  \end{proposition}
+\end{frame}
+
+\begin{frame}[t]{Graphe résiduel} \pause
+  For every arc~$a = (i, j) \in A$, we define a reversed arc~$\overleftarrow{a} = (j, i)$  \pause and the residual capacities:
+  \begin{align*}
+    u_f(a) = u(a) - f(a) && u_f\left(\overleftarrow{a}\right) = f(a)
+  \end{align*}
+
+  \vfill \pause
+  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/residual_graph_1.png}
+    \caption{An example of capacitated graph $D$. \\Bold edges have nonzero residual capacity.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[t]{Graphe résiduel} \pause
+  The residual graph is the capacitated graph~$D_f = (V, A_f, u_f)$ with
+  \begin{align*}
+    A_f = \{a \in A \cup \overleftarrow{A}:~ u_f(a) > 0\} 
+  \end{align*}
+  
+  \vfill \pause
+  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/residual_graph_2.png}
+    \caption{The residual graph $D_f$ deduced from $D$}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[t]{Augmenting paths} \pause
+  An~$f$-augmenting path is an~$s-t$ path in the residual graph~$D_f$.
+  
+  \vfill \pause
+  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/residual_graph_3.png}
+    \caption{An~$f$-augmenting path of length~$4$}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[t]{Optimality criterion} \pause
+  \begin{theorem}[6.4]
+    An~$s-t$ flow~$f$ is optimal iff there is no~$f$-augmenting path. 
+  \end{theorem}
+\end{frame}
+
+\begin{frame}{Illustration of the optimality criterion} \pause
+  \begin{figure}
+    \begin{minipage}{0.65\linewidth}
+      \includegraphics[width=\linewidth]{images/residual_graph_4.png}
+    \end{minipage}
+    \begin{minipage}{0.3\linewidth}
+      \caption{A maximum~$s-t$ flow}
+    \end{minipage}
+  \end{figure}
+  \vfill \pause
+  \begin{figure}
+    \begin{minipage}{0.65\linewidth}
+      \includegraphics[width=\linewidth]{images/residual_graph_5.png}
+    \end{minipage}
+    \begin{minipage}{0.3\linewidth}
+      \caption{A minimal~$s-t$ cut deduced from the disconnected residual graph}
+    \end{minipage}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[t]{Max flow / min cut theorem} \pause
+  \begin{theorem}[6.5]
+    The maximum value of an~$s-t$ flow is equal to the minimum value of an~$s-t$ cut. 
+  \end{theorem}
+\end{frame}
+
+\subsection{Algorithms}
+
+\begin{frame}[t]{Ford-Fulkerson}
+  \setcounter{algocf}{4}
+  \begin{algorithm}[H]
+        \caption{Ford-Fulkerson algorithm}
+   \SetAlgoLined \pause
+   \KwData{a digraph~$D = (V, A)$ with capacities~$u$, two vertices~$s$ and~$t$}
+   \KwResult{an~$s-t$ flow of maximum value} \pause
+   Set~$f(a) = 0$ for all~$a \in A$\; \pause
+   \While{there is an~$f$-augmenting path}{ \pause
+    Select an~$f$-augmenting path~$P$\;
+    Augment~$f$ along~$P$ by~$\min_{a \in P} u_f(a)$\;
+  } \pause
+   Return~$f$
+  \end{algorithm}
+  \vfill \pause
+  Questions: \pause
+  \begin{itemize}
+    \item How do we find / select an augmenting path? \pause
+    \item Does the algorithm terminate, and if so when?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Complexity of Ford-Fulkerson (1)} \pause
+  \begin{proposition}
+    Each iteration of the Ford-Fulkerson loop takes~$O(|A|)$ time
+  \end{proposition}
+  \vfill \pause
+  \begin{proposition}
+    If the capacities $u$ are integral, so are the flow augmentations.
+  \end{proposition}
+  \vfill
+\end{frame}
+
+\begin{frame}[t]{Complexity of Ford-Fulkerson (2)} \pause
+  \begin{theorem}
+     If the capacities $u$ are integral, the Ford-Fulkerson algorithm returns a maximum~$s-t$ flow in~$O(|A| \times \val_{\max})$ time, where~$\val_{\max}$ is the maximum value of an~$s-t$ flow.
+  \end{theorem}
+\end{frame}
+
+\begin{frame}[t]{Edmonds-Karp}
+  \setcounter{algocf}{4}
+  \begin{algorithm}[H]
+        \caption{Edmonds-Karp algorithm}
+   \SetAlgoLined \pause
+   \KwData{a digraph~$D = (V, A)$ with capacities~$u$, two vertices~$s$ and~$t$}
+   \KwResult{an~$s-t$ flow of maximum value} \pause
+   Set~$f(a) = 0$ for all~$a \in A$\; \pause
+   \While{there is an~$f$-augmenting path}{ \pause
+    Select an~$f$-augmenting path~$P$ \textcolor{red}{with minimum number of edges}\; 
+    Augment~$f$ along~$P$ by~$\min_{a \in P} u_f(a)$\;
+  } \pause
+   Return~$f$
+  \end{algorithm}
+  \vfill \pause
+  Questions: \pause
+  \begin{itemize}
+    \item How do we select such an augmenting path? \pause
+    \item Why does it improve the complexity?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Complexity of Edmonds-Karp} \pause
+  \begin{proposition}
+    The Edmonds-Karp loop is crossed at most~$|A| \times |V|$ times.
+  \end{proposition}  \pause
+   We can show that
+    \begin{itemize}
+      \item The (unweighted) distance~$\mathrm{dist}_{D_f}(s, t)$ in the residual graph is nonincreasing
+      \item It can only remain constant for at most~$|A|$ iterations
+    \end{itemize}
+    \pause
+  \begin{theorem}
+     The Edmonds-Karp algorithm returns a maximum~$s-t$ flow in~$O(|A|^2 \times |V|)$ time.
+  \end{theorem}
+\end{frame}
+
+\begin{frame}
+\only<1>{
+\frametitle{Modélisation du réseau ferroviaire soviétique}
+  \begin{figure}
+    \includegraphics[height=0.6\linewidth]{images/ussr_railway_network.png}
+  \end{figure}
+  }
+\only<2>{
+\frametitle{Trouver une coupe}
+  \begin{figure}
+    \includegraphics[height=0.6\linewidth]{images/ussr_max_flow.png}
+  \end{figure}
+  }
+\end{frame}
+
+
+
+
+\section{Minimum cost~$b$-flows}
+
+\subsection{Definitions}
+
+\begin{frame}[t]{Framework}  \pause
+We consider a digraph~$D = (V, A)$ with three special features : \pause
+\begin{itemize}
+  \item lower and upper capacities~$0 \leq \ell(a) \leq u(a)$ on each arc \pause
+  \item cost values~$c(a) \geq 0$ on each arc \pause
+  \item algebraic inputs~$b(v) \in \Rr$ at each vertex such that~$\sum_{v \in V} b(v) = 0$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Definition of a~$b$-flow} \pause
+  A~$b$-flow is a function~$f: A \longmapsto \Rr_+$ satisfying Kirchhoff's current law
+  \begin{align*}
+    \forall v \in V, \quad b(v) + \sum_{a \in \delta^-(v)} f(a) = \sum_{a \in \delta^+(v)} f(a)
+  \end{align*} \pause
+  and capacity constraints
+  \begin{align*}
+    \forall a \in A, \quad \ell(a) \leq f(a) \leq u(a)
+  \end{align*} \pause
+  If~$b(v) = 0$ everywhere, we call~$f$ a circulation.
+  
+  \medskip \pause
+  
+  The cost of a~$b$-flow~$f$ is the sum of the costs induced by~$f$ on each arc:
+  \begin{align*}
+    c(f) = \sum_{a \in A} c(a) f(a)
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Exercises} \pause
+  \begin{enumerate}
+    \item Monge's transportation problem (ex. 6.9)
+    
+    \textit{\tiny Consider~$m$ holes that we want to fill using~$n$ piles of sand. Let us call~$s_i$ the mass of the~$i$-th pile of sand and~$t_j$ the mass of sand necessary to fill the~$j$-th hole. For each couple~$(i,j)$ we know the distance~$d_{ij}$ of the~$i$-th pile to the~$j$-th hole. If a mass~$x_{ij}$ is moved from pile~$i$ to hole~$j$, the cost of the displacement is equal to~$d_{ij}x_{ij}$. We want to find the transportation plan that allows the holes to be filled at the minimum cost.}
+     \pause
+    
+    \item Taxi fleet (ex. 6.13)
+    
+    \textit{\tiny A cab company has~$p$ passenger journeys to complete over a day. For each of these journeys~$i=1,\ldots,p$, they know its departure location~$o_i$ and its departure time~$h_i$, as well as the duration of the trip~$t_i$ and its arrival location~$d_i$. Moreover, the time~$\tau_{ji}$ to get from~$d_j$ to~$o_i$ is known for all couples~$(i,j)$. The company wants to minimize the number of cabs needed to satisfy the demand. All cabs are assumed to be located in one depot at the beginning of the day..}
+  \end{enumerate}
+\end{frame}
+
+\subsection{Optimality criterion}
+
+\begin{frame}[t]{Residual graph and augmenting cycles} \pause
+  For every arc~$a = (i, j) \in A$, we define a reversed arc~$\overleftarrow{a} = (j, i)$ and the residual capacities:
+  \begin{align*}
+    u_f(a) = u(a) - f(a) && u_f\left(\overleftarrow{a}\right) = f(a) - \ell(a)
+  \end{align*} \pause
+  We extend~$c$ to~$\overleftarrow{A}$ by defining~$c\left(\overleftarrow{a}\right) = - c(a)$.
+
+\medskip \pause
+
+  The residual graph is the capacitated graph~$D_f = (V, A_f, u_f)$ with
+  \begin{align*}
+    A_f = \{a \in A \cup \overleftarrow{A}:~ u_f(a) > 0\} 
+  \end{align*} \pause
+  
+  An~$f$-augmenting cycle~$C$ is a cycle in the residual graph~$D_f$. Its cost is defined as
+  \begin{align*}
+    c(C) = \sum_{a \in C} c(a)
+  \end{align*}
+\end{frame}
+
+\begin{frame}[t]{Optimality criterion} \pause
+  \begin{theorem}[6.9]
+    A~$b$-flow~$f$ is minimal iff there is no~$f$-augmenting cycle with negative cost.
+  \end{theorem} \pause
+  \begin{proof}
+    \only<3>{
+      Suppose~$C$ is an~$f$-augmenting cycle with negative cost. We can augment the flow along~$C$ by~$\min_{a \in C} u_f(a)$ to get~$f'$, and see that:
+        \begin{itemize}
+          \item~$f'$ is still a~$b$-flow because 
+          \begin{itemize}
+            \item Kirchhoff's current law is preserved since~$C$ is a cycle
+            \item capacity constraints are still satisfied by choice of~$\min_{a \in C} u_f(a)$
+          \end{itemize}
+          \item~$c(f') = c(f) + \underbrace{c(C)}_{<0} \times \underbrace{\min_{a \in C} u_f(a)}_{>0} < c(f)$ 
+        \end{itemize}
+        Therefore~$f$ does not have a minimum cost.
+    }
+    \only<4>{
+    Now suppose~$f$ is not a minimum cost~$b$-flow, and let~$g$ be another~$b$-flow of smaller cost.
+    \begin{enumerate}
+      \item The difference~$g-f$ is a circulation on~$D_f$
+      \begin{itemize}
+        \item~$g-f$ satisfies Kirchhoff's current law with~$b = 0$
+        \item~$\forall~a \in A, \quad 0 \leq g(a) - f(a) \leq u(a) - f(a) = u_f(a)$
+      \end{itemize}
+      \item Any circulation~$h$ is a positive linear combination of cycles.
+      \begin{itemize}
+        \item This is proved by recursion on the number of nonzero arcs in~$h$
+      \end{itemize}
+      \item By 1 and 2,~$g-f$ can be decomposed as a positive linear combination of cycles in~$D_f$, i.e.~$f$-augmenting cycles. Since~$c(g-f) = c(g) - c(f) < 0$, at least one of these cycles has negative cost.
+    \end{enumerate}
+    }
+  \end{proof}
+\end{frame}
+
+\subsection{Algorithm}
+
+\begin{frame}[t]{Cycle-canceling algorithm \citep{goldbergFindingMinimumcostCirculations1989}} \pause
+  \setcounter{algocf}{4}
+  \begin{algorithm}[H]
+        \caption{Cycle-canceling algorithm}
+   \SetAlgoLined \pause
+   \KwData{a digraph~$D = (V, A)$ with capacities~$l \leq u$, costs~$c$ and inputs~$b$}
+   \KwResult{a~$b$-flow of minimum cost}  \pause
+   Find an initial~$b$-flow~$f$\; \pause
+   \While{there is an~$f$-augmenting cycle with negative cost}{ \pause
+    Select an~$f$-augmenting cycle~$C$ \textcolor{red}{with minimum mean cost}\; 
+    Augment~$f$ along~$C$ by~$\min_{a \in C} u_f(a)$\;
+  } \pause
+   Return~$f$
+  \end{algorithm}
+  \vfill \pause
+  Questions: \pause
+  \begin{itemize}
+    \item How do we find an initial~$b$-flow? \pause
+    \item How do we select an~$f$-augmenting cycle with minimum mean cost?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Complexity of cycle-canceling (1)} \pause
+  \begin{proposition}[ex 6.4]
+    An initial~$b$-flow can be found in~$O(|A| \times |V|)$ time.
+  \end{proposition}
+  \vfill \pause
+  \begin{proposition}[ex 6.3]
+    An $f$-augmenting cycle of minimum mean cost can be found in~$O(|A| \times |V|)$ time.
+  \end{proposition}
+  \vfill
+\end{frame}
+
+\begin{frame}{Complexity of cycle-canceling (2)} \pause
+  \begin{theorem}[6.10]
+    The cycle-canceling algorithm returns a minimum cost~$b$-flow in~$O(|A|^3 |V|^2 \log|V|)$ time.
+  \end{theorem}
+\end{frame}
+
+\section{Linear programming for flows}
+
+\begin{frame}{Linear programming for maximum flow} \pause
+  We can formulate the maximum flow problem as follows: \pause
+  \begin{align*}
+    \max \quad & \sum_{a \in \delta^+(s)} x_a - \sum_{a \in \delta^-(s)} x_a \\
+    \mathrm{s.t.} \quad &
+      \sum_{a \in \delta^-(v)} x_a = \sum_{a \in \delta^+(v)} x_a \quad \quad \forall~ v \in V \backslash \{s, t\} \\
+      & 0 \leq x_a \leq u(a) \quad \quad \forall~ a \in A
+  \end{align*}
+\end{frame}
+
+\begin{frame}[t]{Properties of the max flow LP} \pause
+  \begin{proposition}[6.11]
+    The constraint matrix of the max flow LP is totally unimodular.
+  \end{proposition}
+  
+  \vfill \pause
+
+  \begin{proposition}[6.12]
+    The minimum~$s-t$ cut is the Lagrangian dual of the maximum~$s-t$ flow.
+  \end{proposition}
+  
+  \vfill
+\end{frame}
+
+\begin{frame}{Bonus exercises (by increasing difficulty)} \pause
+  \begin{enumerate}
+    \item Model the optimal seat allocation for a bus company (ex. 6.10)
+    \item Prove Proposition 6.12. Then, prove the max flow / min cut theorem using linear proramming duality (ex. 6.16).
+    \item Find an algorithm for the minimum cut without source or target (ex. 6.17).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{References}
+  \textit{\small Some figures are borrowed from \cite{gaubertRechercheOperationnelleAspects2016}.}
+  \medskip
+ \tiny
+ \renewcommand{\section}[2]{\vskip 0.05em}
+ \bibliography{/home/guillaume/Documents/Zotero.bib}
+\end{frame}
+
+\end{document}

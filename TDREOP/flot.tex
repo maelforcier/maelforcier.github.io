@@ -107,9 +107,9 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
 \end{frame}
 
 \begin{frame}[t]{Graphe résiduel} \pause
-  For every arc~$a = (i, j) \in A$, we define a reversed arc~$\overleftarrow{a} = (j, i)$  \pause and the residual capacities:
+  Pour tout arc~$a = (i, j) \in A$, on définit l'arc~$\overleftarrow{a} = (j, i)$  \pause et les capacités résiduelles :
   \begin{align*}
-    u_f(a) = u(a) - f(a) && u_f\left(\overleftarrow{a}\right) = f(a)
+    u_f(a) = u(a) - f(a) +f\left(\overleftarrow{a}\right)
   \end{align*}
 
   \vfill \pause
@@ -117,50 +117,50 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{images/residual_graph_1.png}
-    \caption{An example of capacitated graph $D$. \\Bold edges have nonzero residual capacity.}
+    \caption{Les arcs en gras ont des capacités résiduelles non nulles.}
   \end{figure}
 \end{frame}
 
 \begin{frame}[t]{Graphe résiduel} \pause
-  The residual graph is the capacitated graph~$D_f = (V, A_f, u_f)$ with
+  Le graphe résiduel est le graphe ~$D_f = (V, A_f)$ avec
   \begin{align*}
     A_f = \{a \in A \cup \overleftarrow{A}:~ u_f(a) > 0\} 
   \end{align*}
+  munis des capacités $u_f$
   
   \vfill \pause
   
   \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{images/residual_graph_2.png}
-    \caption{The residual graph $D_f$ deduced from $D$}
+    \caption{Le graphe résiduel $D_f$ deduit de $D$}
   \end{figure}
 \end{frame}
 
-\begin{frame}[t]{Augmenting paths} \pause
-  An~$f$-augmenting path is an~$s-t$ path in the residual graph~$D_f$.
+\begin{frame}[t]{Chemin dans le graphe résiduel}
+  Un ~$s-t$ chemin dans le graphe résiduel ~$D_f$ permet de trouver un flot de plus grande valeur.
   
   \vfill \pause
   
   \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{images/residual_graph_3.png}
-    \caption{An~$f$-augmenting path of length~$4$}
   \end{figure}
 \end{frame}
 
-\begin{frame}[t]{Optimality criterion} \pause
+\begin{frame}[t]{Critère d'optimalité} \pause
   \begin{theorem}[6.4]
-    An~$s-t$ flow~$f$ is optimal iff there is no~$f$-augmenting path. 
+    Un~$s-t$ flot ~$f$ est maximal ssi il n'existe pas de chemin dans son graphe résiduel ~$D_f$. 
   \end{theorem}
 \end{frame}
 
-\begin{frame}{Illustration of the optimality criterion} \pause
+\begin{frame}{Illustration du critère d'optimalité} \pause
   \begin{figure}
     \begin{minipage}{0.65\linewidth}
       \includegraphics[width=\linewidth]{images/residual_graph_4.png}
     \end{minipage}
     \begin{minipage}{0.3\linewidth}
-      \caption{A maximum~$s-t$ flow}
+      \caption{Un $s-t$ flot maximal}
     \end{minipage}
   \end{figure}
   \vfill \pause
@@ -169,14 +169,14 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
       \includegraphics[width=\linewidth]{images/residual_graph_5.png}
     \end{minipage}
     \begin{minipage}{0.3\linewidth}
-      \caption{A minimal~$s-t$ cut deduced from the disconnected residual graph}
+      \caption{Une ~$s-t$ coupe de capacité $0$ dans le graphe résiduel.}
     \end{minipage}
   \end{figure}
 \end{frame}
 
-\begin{frame}[t]{Max flow / min cut theorem} \pause
+\begin{frame}[t]{Théorème Max flow / min cut} \pause
   \begin{theorem}[6.5]
-    The maximum value of an~$s-t$ flow is equal to the minimum value of an~$s-t$ cut. 
+    La valeur maximale d'un $s-t$ flot est égale à la capacité minimale d'une $s-t$ coupe. 
   \end{theorem}
 \end{frame}
 
@@ -185,16 +185,14 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
 \begin{frame}[t]{Ford-Fulkerson}
   \setcounter{algocf}{4}
   \begin{algorithm}[H]
-        \caption{Ford-Fulkerson algorithm}
-   \SetAlgoLined \pause
-   \KwData{a digraph~$D = (V, A)$ with capacities~$u$, two vertices~$s$ and~$t$}
-   \KwResult{an~$s-t$ flow of maximum value} \pause
-   Set~$f(a) = 0$ for all~$a \in A$\; \pause
-   \While{there is an~$f$-augmenting path}{ \pause
-    Select an~$f$-augmenting path~$P$\;
-    Augment~$f$ along~$P$ by~$\min_{a \in P} u_f(a)$\;
+        \caption{Algorithme de Ford-Fulkerson}
+   \SetAlgoLined 
+   ~$f(a):= 0$ pour tout ~$a \in A$\; \pause
+   \While{il existe un chemin dans le graphe résiduel}{ \pause
+    Sélectionner $P$ un $s-t$ chemin dans le graphe résiduel\;
+    Augmenter ~$f$  le long de ~$P$ par ~$\min_{a \in P} u_f(a)$\;
   } \pause
-   Return~$f$
+   Retourner ~$f$
   \end{algorithm}
   \vfill \pause
   Questions: \pause
@@ -204,74 +202,102 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Complexity of Ford-Fulkerson (1)} \pause
-  \begin{proposition}
-    Each iteration of the Ford-Fulkerson loop takes~$O(|A|)$ time
+% \begin{frame}[t]{Complexity of Ford-Fulkerson (1)} \pause
+%   \begin{proposition}
+%     Each iteration of the Ford-Fulkerson loop takes~$O(|A|)$ time
+%   \end{proposition}
+%   \vfill \pause
+%   \begin{proposition}
+%     If the capacities $u$ are integral, so are the flow augmentations.
+%   \end{proposition}
+%   \vfill
+% \end{frame}
+
+% \begin{frame}[t]{Complexity of Ford-Fulkerson (2)} \pause
+%   \begin{theorem}
+%      If the capacities $u$ are integral, the Ford-Fulkerson algorithm returns a maximum~$s-t$ flow in~$O(|A| \times \val_{\max})$ time, where~$\val_{\max}$ is the maximum value of an~$s-t$ flow.
+%   \end{theorem}
+% \end{frame}
+
+% \begin{frame}[t]{Edmonds-Karp}
+%   \setcounter{algocf}{4}
+%   \begin{algorithm}[H]
+%         \caption{Edmonds-Karp algorithm}
+%    \SetAlgoLined \pause
+%    \KwData{a digraph~$D = (V, A)$ with capacities~$u$, two vertices~$s$ and~$t$}
+%    \KwResult{an~$s-t$ flow of maximum value} \pause
+%    Set~$f(a) = 0$ for all~$a \in A$\; \pause
+%    \While{there is an~$f$-augmenting path}{ \pause
+%     Select an~$f$-augmenting path~$P$ \textcolor{red}{with minimum number of edges}\; 
+%     Augment~$f$ along~$P$ by~$\min_{a \in P} u_f(a)$\;
+%   } \pause
+%    Return~$f$
+%   \end{algorithm}
+%   \vfill \pause
+%   Questions: \pause
+%   \begin{itemize}
+%     \item How do we select such an augmenting path? \pause
+%     \item Why does it improve the complexity?
+%   \end{itemize}
+% \end{frame}
+
+% \begin{frame}{Complexity of Edmonds-Karp} \pause
+%   \begin{proposition}
+%     The Edmonds-Karp loop is crossed at most~$|A| \times |V|$ times.
+%   \end{proposition}  \pause
+%    We can show that
+%     \begin{itemize}
+%       \item The (unweighted) distance~$\mathrm{dist}_{D_f}(s, t)$ in the residual graph is nonincreasing
+%       \item It can only remain constant for at most~$|A|$ iterations
+%     \end{itemize}
+%     \pause
+%   \begin{theorem}
+%      The Edmonds-Karp algorithm returns a maximum~$s-t$ flow in~$O(|A|^2 \times |V|)$ time.
+%   \end{theorem}
+% \end{frame}
+
+% \begin{frame}
+% \only<1>{
+% \frametitle{Modélisation du réseau ferroviaire soviétique}
+%   \begin{figure}
+%     \includegraphics[height=0.6\linewidth]{images/ussr_railway_network.png}
+%   \end{figure}
+%   }
+% \only<2>{
+% \frametitle{Trouver une coupe}
+%   \begin{figure}
+%     \includegraphics[height=0.6\linewidth]{images/ussr_max_flow.png}
+%   \end{figure}
+%   }
+% \end{frame}
+
+
+\section{Programmation linéaire pour les flots}
+
+\begin{frame}{Programmation linéaire pour les flots maximaux} \pause
+  On peut reformuler le problème de flot maximal comme de la programmation linéaire : \pause
+  \begin{align*}
+    \max \quad & \sum_{a \in \delta^+(s)} x_a - \sum_{a \in \delta^-(s)} x_a \\
+    \mathrm{s.t.} \quad &
+      \sum_{a \in \delta^-(v)} x_a = \sum_{a \in \delta^+(v)} x_a \quad \quad \forall~ v \in V \backslash \{s, t\} \\
+      & 0 \leq x_a \leq u(a) \quad \quad \forall~ a \in A
+  \end{align*}
+\end{frame}
+
+\begin{frame}[t]{Propriété des LP de type max flow} \pause
+  \begin{proposition}[6.11]
+    La matrice des contraintes d'un LP de type max flow est totalement unimodulaire.
   \end{proposition}
+  
   \vfill \pause
-  \begin{proposition}
-    If the capacities $u$ are integral, so are the flow augmentations.
+
+  \begin{proposition}[6.12]
+    Le problème de coupe minimale est le dual du problème de flot maximal.
   \end{proposition}
+  
   \vfill
 \end{frame}
 
-\begin{frame}[t]{Complexity of Ford-Fulkerson (2)} \pause
-  \begin{theorem}
-     If the capacities $u$ are integral, the Ford-Fulkerson algorithm returns a maximum~$s-t$ flow in~$O(|A| \times \val_{\max})$ time, where~$\val_{\max}$ is the maximum value of an~$s-t$ flow.
-  \end{theorem}
-\end{frame}
-
-\begin{frame}[t]{Edmonds-Karp}
-  \setcounter{algocf}{4}
-  \begin{algorithm}[H]
-        \caption{Edmonds-Karp algorithm}
-   \SetAlgoLined \pause
-   \KwData{a digraph~$D = (V, A)$ with capacities~$u$, two vertices~$s$ and~$t$}
-   \KwResult{an~$s-t$ flow of maximum value} \pause
-   Set~$f(a) = 0$ for all~$a \in A$\; \pause
-   \While{there is an~$f$-augmenting path}{ \pause
-    Select an~$f$-augmenting path~$P$ \textcolor{red}{with minimum number of edges}\; 
-    Augment~$f$ along~$P$ by~$\min_{a \in P} u_f(a)$\;
-  } \pause
-   Return~$f$
-  \end{algorithm}
-  \vfill \pause
-  Questions: \pause
-  \begin{itemize}
-    \item How do we select such an augmenting path? \pause
-    \item Why does it improve the complexity?
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Complexity of Edmonds-Karp} \pause
-  \begin{proposition}
-    The Edmonds-Karp loop is crossed at most~$|A| \times |V|$ times.
-  \end{proposition}  \pause
-   We can show that
-    \begin{itemize}
-      \item The (unweighted) distance~$\mathrm{dist}_{D_f}(s, t)$ in the residual graph is nonincreasing
-      \item It can only remain constant for at most~$|A|$ iterations
-    \end{itemize}
-    \pause
-  \begin{theorem}
-     The Edmonds-Karp algorithm returns a maximum~$s-t$ flow in~$O(|A|^2 \times |V|)$ time.
-  \end{theorem}
-\end{frame}
-
-\begin{frame}
-\only<1>{
-\frametitle{Modélisation du réseau ferroviaire soviétique}
-  \begin{figure}
-    \includegraphics[height=0.6\linewidth]{images/ussr_railway_network.png}
-  \end{figure}
-  }
-\only<2>{
-\frametitle{Trouver une coupe}
-  \begin{figure}
-    \includegraphics[height=0.6\linewidth]{images/ussr_max_flow.png}
-  \end{figure}
-  }
-\end{frame}
 
 
 
@@ -419,31 +445,6 @@ We consider a digraph~$D = (V, A)$ with three special features : \pause
   \end{theorem}
 \end{frame}
 
-\section{Linear programming for flows}
-
-\begin{frame}{Linear programming for maximum flow} \pause
-  We can formulate the maximum flow problem as follows: \pause
-  \begin{align*}
-    \max \quad & \sum_{a \in \delta^+(s)} x_a - \sum_{a \in \delta^-(s)} x_a \\
-    \mathrm{s.t.} \quad &
-      \sum_{a \in \delta^-(v)} x_a = \sum_{a \in \delta^+(v)} x_a \quad \quad \forall~ v \in V \backslash \{s, t\} \\
-      & 0 \leq x_a \leq u(a) \quad \quad \forall~ a \in A
-  \end{align*}
-\end{frame}
-
-\begin{frame}[t]{Properties of the max flow LP} \pause
-  \begin{proposition}[6.11]
-    The constraint matrix of the max flow LP is totally unimodular.
-  \end{proposition}
-  
-  \vfill \pause
-
-  \begin{proposition}[6.12]
-    The minimum~$s-t$ cut is the Lagrangian dual of the maximum~$s-t$ flow.
-  \end{proposition}
-  
-  \vfill
-\end{frame}
 
 \begin{frame}{Bonus exercises (by increasing difficulty)} \pause
   \begin{enumerate}

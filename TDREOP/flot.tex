@@ -89,13 +89,13 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   \vfill
 \end{frame}
 
-\begin{frame}{Exercises} \pause
-  \begin{enumerate}
-    \item Battle on a network (6.18)
+% \begin{frame}{Exercises} \pause
+%   \begin{enumerate}
+%     \item Battle on a network (6.18)
     
-    \textit{\tiny A command center is located at a vertex~$p$ of a non-directed network. We know the position of subordinates modeled by a subset~$S$ of the vertices of the network. We want to destroy a minimum number of links in order to prevent any communication between the command center and the subordinates. How to solve this problem in polynomial time?}
-  \end{enumerate}
-\end{frame}
+%     \textit{\tiny A command center is located at a vertex~$p$ of a non-directed network. We know the position of subordinates modeled by a subset~$S$ of the vertices of the network. We want to destroy a minimum number of links in order to prevent any communication between the command center and the subordinates. How to solve this problem in polynomial time?}
+%   \end{enumerate}
+% \end{frame}
 
 
 
@@ -180,10 +180,11 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   \end{theorem}
 \end{frame}
 
-\subsection{Algorithms}
+\subsection{Algorithmes}
 
 \begin{frame}[t]{Ford-Fulkerson}
   \setcounter{algocf}{4}
+  \vfill
   \begin{algorithm}[H]
         \caption{Algorithme de Ford-Fulkerson}
    \SetAlgoLined 
@@ -194,12 +195,7 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   } \pause
    Retourner ~$f$
   \end{algorithm}
-  \vfill \pause
-  Questions: \pause
-  \begin{itemize}
-    \item How do we find / select an augmenting path? \pause
-    \item Does the algorithm terminate, and if so when?
-  \end{itemize}
+  \vfill 
 \end{frame}
 
 % \begin{frame}[t]{Complexity of Ford-Fulkerson (1)} \pause
@@ -302,17 +298,18 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
 
 
 
-\section{Minimum cost~$b$-flows}
+\section{$b$-flot à coût minimal}
 
-\subsection{Definitions}
+\subsection{Définitions}
 
-\begin{frame}[t]{Framework}  \pause
-We consider a digraph~$D = (V, A)$ with three special features : \pause
+\begin{frame}[t]{Cadre}  \pause
+Soit ~$D = (V, A)$ un graphe orienté avec : \pause
 \begin{itemize}
-  \item lower and upper capacities~$0 \leq \ell(a) \leq u(a)$ on each arc \pause
-  \item cost values~$c(a) \geq 0$ on each arc \pause
-  \item algebraic inputs~$b(v) \in \Rr$ at each vertex such that~$\sum_{v \in V} b(v) = 0$
+  \item des bornes inférieures et supérieurs sur les capacités ~$0 \leq \ell(a) \leq u(a)$ pour chaque arc \pause
+  \item des coûts ~$c(a) \geq 0$ pour chaque arc $a \in A$ \pause
+  \item une "source" algébrique ~$b(v) \in \Rr$ à chaque sommet
 \end{itemize}
+
 \end{frame}
 
 \begin{frame}[t]{Definition of a~$b$-flow} \pause
@@ -332,6 +329,9 @@ We consider a digraph~$D = (V, A)$ with three special features : \pause
   \begin{align*}
     c(f) = \sum_{a \in A} c(a) f(a)
   \end{align*}
+
+  On doit avoir 
+$\sum_{v \in V} b(v) = 0$
 \end{frame}
 
 \begin{frame}{Exercises} \pause
@@ -428,22 +428,22 @@ We consider a digraph~$D = (V, A)$ with three special features : \pause
   \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Complexity of cycle-canceling (1)} \pause
-  \begin{proposition}[ex 6.4]
-    An initial~$b$-flow can be found in~$O(|A| \times |V|)$ time.
-  \end{proposition}
-  \vfill \pause
-  \begin{proposition}[ex 6.3]
-    An $f$-augmenting cycle of minimum mean cost can be found in~$O(|A| \times |V|)$ time.
-  \end{proposition}
-  \vfill
-\end{frame}
+% \begin{frame}[t]{Complexity of cycle-canceling (1)} \pause
+%   \begin{proposition}[ex 6.4]
+%     An initial~$b$-flow can be found in~$O(|A| \times |V|)$ time.
+%   \end{proposition}
+%   \vfill \pause
+%   \begin{proposition}[ex 6.3]
+%     An $f$-augmenting cycle of minimum mean cost can be found in~$O(|A| \times |V|)$ time.
+%   \end{proposition}
+%   \vfill
+% \end{frame}
 
-\begin{frame}{Complexity of cycle-canceling (2)} \pause
-  \begin{theorem}[6.10]
-    The cycle-canceling algorithm returns a minimum cost~$b$-flow in~$O(|A|^3 |V|^2 \log|V|)$ time.
-  \end{theorem}
-\end{frame}
+% \begin{frame}{Complexity of cycle-canceling (2)} \pause
+%   \begin{theorem}[6.10]
+%     The cycle-canceling algorithm returns a minimum cost~$b$-flow in~$O(|A|^3 |V|^2 \log|V|)$ time.
+%   \end{theorem}
+% \end{frame}
 
 
 \begin{frame}{Bonus exercises (by increasing difficulty)} \pause
@@ -452,14 +452,6 @@ We consider a digraph~$D = (V, A)$ with three special features : \pause
     \item Prove Proposition 6.12. Then, prove the max flow / min cut theorem using linear proramming duality (ex. 6.16).
     \item Find an algorithm for the minimum cut without source or target (ex. 6.17).
   \end{enumerate}
-\end{frame}
-
-\begin{frame}{References}
-  \textit{\small Some figures are borrowed from \cite{gaubertRechercheOperationnelleAspects2016}.}
-  \medskip
- \tiny
- \renewcommand{\section}[2]{\vskip 0.05em}
- \bibliography{/home/guillaume/Documents/Zotero.bib}
 \end{frame}
 
 \end{document}

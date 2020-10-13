@@ -11,6 +11,8 @@
 \institute[REOP 2020]{REOP 2020}
 \date{14/10/2020}
 
+\setbeamertemplate{navigation symbols}{}
+
 \begin{document}
 
 \begin{frame}
@@ -55,9 +57,10 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   Exercice: Calculer un ~$s-t$ flot maximal dans le graphe suivant :
     \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{images/flow_example.png}
+    \includegraphics[scale=0.45]{images/flow_example.png}
 \end{figure}
 \end{frame}
+
 
 \begin{frame}[t]{Définition d'une coupe} 
   Une ~$s-t$ coupe ~$(S, T)$ est une partition de l'ensemble des sommets $V = S \sqcup T$ telle que ~$s \in S$ et ~$t \in T$.
@@ -104,9 +107,17 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
     Soit ~$f \leq u$ un ~$s-t$ flot et ~$B$ une ~$s-t$ coupe.\\
     Alors ~$\val(f) \leq u(B)$.
   \end{proposition}
+  \pause
+Exercice: Calculer un ~$s-t$ flot maximal dans le graphe suivant :
+    \begin{figure}
+    \centering
+    \includegraphics[scale=0.45]{images/flow_example.png}
+\end{figure}
+
 \end{frame}
 
-\begin{frame}[t]{Graphe résiduel} \pause
+\subsection{Graphe résiduel et Ford Fulkerson}
+\begin{frame}[t]{Graphe résiduel}
   Pour tout arc~$a = (i, j) \in A$, on définit l'arc~$\overleftarrow{a} = (j, i)$  \pause et les capacités résiduelles :
   \begin{align*}
     u_f(a) = u(a) - f(a) +f\left(\overleftarrow{a}\right)
@@ -121,7 +132,7 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   \end{figure}
 \end{frame}
 
-\begin{frame}[t]{Graphe résiduel} \pause
+\begin{frame}[t]{Graphe résiduel}
   Le graphe résiduel est le graphe ~$D_f = (V, A_f)$ avec
   \begin{align*}
     A_f = \{a \in A \cup \overleftarrow{A}:~ u_f(a) > 0\} 
@@ -180,7 +191,6 @@ Soit $D = (V, A)$ un graphe orienté avec : \pause
   \end{theorem}
 \end{frame}
 
-\subsection{Algorithmes}
 
 \begin{frame}[t]{Ford-Fulkerson}
   \setcounter{algocf}{4}
@@ -312,121 +322,109 @@ Soit ~$D = (V, A)$ un graphe orienté avec : \pause
 
 \end{frame}
 
-\begin{frame}[t]{Definition of a~$b$-flow} \pause
-  A~$b$-flow is a function~$f: A \longmapsto \Rr_+$ satisfying Kirchhoff's current law
+\begin{frame}[t]{Définition d'un $b$-flot} \pause
+  Un ~$b$-flot est une fonction ~$f: A \longmapsto \Rr_+$ satisfaisant la loi de  Kirchhoff
   \begin{align*}
     \forall v \in V, \quad b(v) + \sum_{a \in \delta^-(v)} f(a) = \sum_{a \in \delta^+(v)} f(a)
   \end{align*} \pause
-  and capacity constraints
+  et les contraintes de capacité
   \begin{align*}
     \forall a \in A, \quad \ell(a) \leq f(a) \leq u(a)
   \end{align*} \pause
-  If~$b(v) = 0$ everywhere, we call~$f$ a circulation.
+  Si ~$b(v) = 0$ partout, on dit que ~$f$ est une circulation.
   
   \medskip \pause
   
-  The cost of a~$b$-flow~$f$ is the sum of the costs induced by~$f$ on each arc:
+  Le coût d'un ~$b$-flot~$f$ est
   \begin{align*}
     c(f) = \sum_{a \in A} c(a) f(a)
   \end{align*}
 
   On doit avoir 
-$\sum_{v \in V} b(v) = 0$
+$\sum_{v \in V} b(v) = 0$ si on veut satisfaire la loi de Kirchhoff.
 \end{frame}
 
-\begin{frame}{Exercises} \pause
-  \begin{enumerate}
-    \item Monge's transportation problem (ex. 6.9)
-    
-    \textit{\tiny Consider~$m$ holes that we want to fill using~$n$ piles of sand. Let us call~$s_i$ the mass of the~$i$-th pile of sand and~$t_j$ the mass of sand necessary to fill the~$j$-th hole. For each couple~$(i,j)$ we know the distance~$d_{ij}$ of the~$i$-th pile to the~$j$-th hole. If a mass~$x_{ij}$ is moved from pile~$i$ to hole~$j$, the cost of the displacement is equal to~$d_{ij}x_{ij}$. We want to find the transportation plan that allows the holes to be filled at the minimum cost.}
-     \pause
-    
-    \item Taxi fleet (ex. 6.13)
-    
-    \textit{\tiny A cab company has~$p$ passenger journeys to complete over a day. For each of these journeys~$i=1,\ldots,p$, they know its departure location~$o_i$ and its departure time~$h_i$, as well as the duration of the trip~$t_i$ and its arrival location~$d_i$. Moreover, the time~$\tau_{ji}$ to get from~$d_j$ to~$o_i$ is known for all couples~$(i,j)$. The company wants to minimize the number of cabs needed to satisfy the demand. All cabs are assumed to be located in one depot at the beginning of the day..}
-  \end{enumerate}
-\end{frame}
 
-\subsection{Optimality criterion}
 
-\begin{frame}[t]{Residual graph and augmenting cycles} \pause
-  For every arc~$a = (i, j) \in A$, we define a reversed arc~$\overleftarrow{a} = (j, i)$ and the residual capacities:
+\begin{frame}[t]{Graphe résiduel et cycles} \pause
+  Pour tout arc~$a=(i, j) \in A$, on définit l'arc~$\overleftarrow{a} = (j, i)$ et les capacités résiduelles :
   \begin{align*}
-    u_f(a) = u(a) - f(a) && u_f\left(\overleftarrow{a}\right) = f(a) - \ell(a)
+    u_f(i,j) = u(i,j) - f(i,j)+f(j,i) -l(j,i) 
   \end{align*} \pause
-  We extend~$c$ to~$\overleftarrow{A}$ by defining~$c\left(\overleftarrow{a}\right) = - c(a)$.
+  On étend ~$c$ en définissant ~$\tilde c(i,j) = c(i,j)-c(j,i)$.
 
 \medskip \pause
 
-  The residual graph is the capacitated graph~$D_f = (V, A_f, u_f)$ with
+  Le graphe résiduel est le graphe ~$D_f = (V, A_f)$, munis des capacités $u_f$ et des coût $\tilde c$ avec
   \begin{align*}
     A_f = \{a \in A \cup \overleftarrow{A}:~ u_f(a) > 0\} 
   \end{align*} \pause
   
-  An~$f$-augmenting cycle~$C$ is a cycle in the residual graph~$D_f$. Its cost is defined as
+  On peut construire un algorithme en regardant les cycles dans le graphe résiduel.
+  On définit le coût d'un cycle par
   \begin{align*}
     c(C) = \sum_{a \in C} c(a)
   \end{align*}
 \end{frame}
 
-\begin{frame}[t]{Optimality criterion} \pause
-  \begin{theorem}[6.9]
-    A~$b$-flow~$f$ is minimal iff there is no~$f$-augmenting cycle with negative cost.
-  \end{theorem} \pause
-  \begin{proof}
-    \only<3>{
-      Suppose~$C$ is an~$f$-augmenting cycle with negative cost. We can augment the flow along~$C$ by~$\min_{a \in C} u_f(a)$ to get~$f'$, and see that:
-        \begin{itemize}
-          \item~$f'$ is still a~$b$-flow because 
-          \begin{itemize}
-            \item Kirchhoff's current law is preserved since~$C$ is a cycle
-            \item capacity constraints are still satisfied by choice of~$\min_{a \in C} u_f(a)$
-          \end{itemize}
-          \item~$c(f') = c(f) + \underbrace{c(C)}_{<0} \times \underbrace{\min_{a \in C} u_f(a)}_{>0} < c(f)$ 
-        \end{itemize}
-        Therefore~$f$ does not have a minimum cost.
-    }
-    \only<4>{
-    Now suppose~$f$ is not a minimum cost~$b$-flow, and let~$g$ be another~$b$-flow of smaller cost.
-    \begin{enumerate}
-      \item The difference~$g-f$ is a circulation on~$D_f$
-      \begin{itemize}
-        \item~$g-f$ satisfies Kirchhoff's current law with~$b = 0$
-        \item~$\forall~a \in A, \quad 0 \leq g(a) - f(a) \leq u(a) - f(a) = u_f(a)$
-      \end{itemize}
-      \item Any circulation~$h$ is a positive linear combination of cycles.
-      \begin{itemize}
-        \item This is proved by recursion on the number of nonzero arcs in~$h$
-      \end{itemize}
-      \item By 1 and 2,~$g-f$ can be decomposed as a positive linear combination of cycles in~$D_f$, i.e.~$f$-augmenting cycles. Since~$c(g-f) = c(g) - c(f) < 0$, at least one of these cycles has negative cost.
-    \end{enumerate}
-    }
-  \end{proof}
-\end{frame}
+% \begin{frame}[t]{Optimality criterion} \pause
+%   \begin{theorem}[6.9]
+%     A~$b$-flow~$f$ is minimal iff there is no~$f$-augmenting cycle with negative cost.
+%   \end{theorem} \pause
+%   \begin{proof}
+%     \only<3>{
+%       Suppose~$C$ is an~$f$-augmenting cycle with negative cost. We can augment the flow along~$C$ by~$\min_{a \in C} u_f(a)$ to get~$f'$, and see that:
+%         \begin{itemize}
+%           \item~$f'$ is still a~$b$-flow because 
+%           \begin{itemize}
+%             \item Kirchhoff's current law is preserved since~$C$ is a cycle
+%             \item capacity constraints are still satisfied by choice of~$\min_{a \in C} u_f(a)$
+%           \end{itemize}
+%           \item~$c(f') = c(f) + \underbrace{c(C)}_{<0} \times \underbrace{\min_{a \in C} u_f(a)}_{>0} < c(f)$ 
+%         \end{itemize}
+%         Therefore~$f$ does not have a minimum cost.
+%     }
+%     \only<4>{
+%     Now suppose~$f$ is not a minimum cost~$b$-flow, and let~$g$ be another~$b$-flow of smaller cost.
+%     \begin{enumerate}
+%       \item The difference~$g-f$ is a circulation on~$D_f$
+%       \begin{itemize}
+%         \item~$g-f$ satisfies Kirchhoff's current law with~$b = 0$
+%         \item~$\forall~a \in A, \quad 0 \leq g(a) - f(a) \leq u(a) - f(a) = u_f(a)$
+%       \end{itemize}
+%       \item Any circulation~$h$ is a positive linear combination of cycles.
+%       \begin{itemize}
+%         \item This is proved by recursion on the number of nonzero arcs in~$h$
+%       \end{itemize}
+%       \item By 1 and 2,~$g-f$ can be decomposed as a positive linear combination of cycles in~$D_f$, i.e.~$f$-augmenting cycles. Since~$c(g-f) = c(g) - c(f) < 0$, at least one of these cycles has negative cost.
+%     \end{enumerate}
+%     }
+%   \end{proof}
+% \end{frame}
 
-\subsection{Algorithm}
+% \subsection{Algorithm}
 
-\begin{frame}[t]{Cycle-canceling algorithm \citep{goldbergFindingMinimumcostCirculations1989}} \pause
-  \setcounter{algocf}{4}
-  \begin{algorithm}[H]
-        \caption{Cycle-canceling algorithm}
-   \SetAlgoLined \pause
-   \KwData{a digraph~$D = (V, A)$ with capacities~$l \leq u$, costs~$c$ and inputs~$b$}
-   \KwResult{a~$b$-flow of minimum cost}  \pause
-   Find an initial~$b$-flow~$f$\; \pause
-   \While{there is an~$f$-augmenting cycle with negative cost}{ \pause
-    Select an~$f$-augmenting cycle~$C$ \textcolor{red}{with minimum mean cost}\; 
-    Augment~$f$ along~$C$ by~$\min_{a \in C} u_f(a)$\;
-  } \pause
-   Return~$f$
-  \end{algorithm}
-  \vfill \pause
-  Questions: \pause
-  \begin{itemize}
-    \item How do we find an initial~$b$-flow? \pause
-    \item How do we select an~$f$-augmenting cycle with minimum mean cost?
-  \end{itemize}
-\end{frame}
+% \begin{frame}[t]{Cycle-canceling algorithm \citep{goldbergFindingMinimumcostCirculations1989}} \pause
+%   \setcounter{algocf}{4}
+%   \begin{algorithm}[H]
+%         \caption{Cycle-canceling algorithm}
+%    \SetAlgoLined \pause
+%    \KwData{a digraph~$D = (V, A)$ with capacities~$l \leq u$, costs~$c$ and inputs~$b$}
+%    \KwResult{a~$b$-flow of minimum cost}  \pause
+%    Find an initial~$b$-flow~$f$\; \pause
+%    \While{there is an~$f$-augmenting cycle with negative cost}{ \pause
+%     Select an~$f$-augmenting cycle~$C$ \textcolor{red}{with minimum mean cost}\; 
+%     Augment~$f$ along~$C$ by~$\min_{a \in C} u_f(a)$\;
+%   } \pause
+%    Return~$f$
+%   \end{algorithm}
+%   \vfill \pause
+%   Questions: \pause
+%   \begin{itemize}
+%     \item How do we find an initial~$b$-flow? \pause
+%     \item How do we select an~$f$-augmenting cycle with minimum mean cost?
+%   \end{itemize}
+% \end{frame}
 
 % \begin{frame}[t]{Complexity of cycle-canceling (1)} \pause
 %   \begin{proposition}[ex 6.4]
@@ -446,12 +444,24 @@ $\sum_{v \in V} b(v) = 0$
 % \end{frame}
 
 
-\begin{frame}{Bonus exercises (by increasing difficulty)} \pause
-  \begin{enumerate}
-    \item Model the optimal seat allocation for a bus company (ex. 6.10)
-    \item Prove Proposition 6.12. Then, prove the max flow / min cut theorem using linear proramming duality (ex. 6.16).
-    \item Find an algorithm for the minimum cut without source or target (ex. 6.17).
-  \end{enumerate}
+
+\begin{frame}{Exercices}
+    \only<1>{Monge's transportation problem (ex. 6.9)\\
+    
+    Consider~$m$ holes that we want to fill using~$n$ piles of sand. Let us call~$s_i$ the mass of the~$i$-th pile of sand and~$t_j$ the mass of sand necessary to fill the~$j$-th hole. For each couple~$(i,j)$ we know the distance~$d_{ij}$ of the~$i$-th pile to the~$j$-th hole. If a mass~$x_{ij}$ is moved from pile~$i$ to hole~$j$, the cost of the displacement is equal to~$d_{ij}x_{ij}$. We want to find the transportation plan that allows the holes to be filled at the minimum cost.
+    }
+    \only<2>{
+    Seat alocation of a bus company (ex. 6.10)\\
+    
+    A bus capable of carrying not more than B passengers will depart from city 1 and visit the cities $2,3,\cdots,n$ successively.
+    The number of passengers wanting to travel from city $i$ to city $j$ (with $i<j$) is $d_{i,j}$ ande the price of this trip is $p_{i,j}$. How many passengers should we take in each city to maximize total revenue ? Model this problem as a flow problem.
+    }
+    \only<3>{
+    Taxi fleet (ex. 6.13)\\
+    
+    A cab company has~$p$ passenger journeys to complete over a day. For each of these journeys~$i=1,\ldots,p$, they know its departure location~$o_i$ and its departure time~$h_i$, as well as the duration of the trip~$t_i$ and its arrival location~$d_i$. Moreover, the time~$\tau_{ji}$ to get from~$d_j$ to~$o_i$ is known for all couples~$(i,j)$. The company wants to minimize the number of cabs needed to satisfy the demand. All cabs are assumed to be located in one depot at the beginning of the day.
+    }
 \end{frame}
+
 
 \end{document}

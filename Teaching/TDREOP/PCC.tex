@@ -115,7 +115,7 @@
 \title[]{Plus courts chemins\\ et programmation dynamique discrète}
 \author[Université Paris Est, Ecole des Ponts]{Maël Forcier}
 
-\date{7 octobre 2020}
+\date{29 septembre 2021}
 \pgfdeclaremask{tu}{beamer-tu-logo-mask}
 \pgfdeclaremask{ur}{beamer-ur-logo-mask}
 \pgfdeclareimage[mask=tu,width=0.6cm]{tu-logo}{beamer-tu-logo}
@@ -412,8 +412,8 @@ $m$: nombres d'arcs
 
 \begin{frame}\frametitle{L'idée de Bellman}
 
-Principe d'optimalité de Bellman\\
-\pause
+Principe d'optimalité de Bellman \\
+
 La sous-trajectoire d'une trajectoire optimale est encore optimale:
 
  \begin{proposition}[5.2]
@@ -506,11 +506,11 @@ Principe d'optimalité de Bellman\\
 \pause
 La sous-trajectoire d'une trajectoire optimale est encore optimale:
 
- \begin{proposition}[5.4]
+ \begin{theorem}[5.4]
   Soit $G$ un graphe orienté acylique, $P$ un $o$-$v$ chemin et $Q$ son sous-$o$-$u$ chemin, où $u$ est le sommet avant $v$ dans $P$.\\
-  Si $P$ est le plus petit $o$-$v$ chemin,\quad
+  Si $P$ est le plus petit $o$-$v$ chemin, 
   alors $Q$ est le plus petit $o$-$u$ chemin.
- \end{proposition}
+ \end{theorem}
  \vfill
  \pause
  L'équation de Bellman devient 
@@ -526,41 +526,9 @@ tel que $(u,v) \in A \Rightarrow u\preceq v$
 
 
 
-\begin{frame}\frametitle{Programmation dynamique}
-
-{\footnotesize
- On a
-\begin{enumerate}
-\item système dynamique à temps discret $x_{k+1}=f_k(x_k,u_k),\quad k=1,2,\ldots,N$
-\item fonction de coût additive dans le temps.
-\end{enumerate}
-
-\bigskip
-
-$x_0$ : {\blue état initial}.
-
-\bigskip
-
-$x_k$ : {\blue état} au début de la {\blue période $k$}. 
-
-\bigskip
-
-$u_k$ : {\blue décision} pour la période $k$.
-
-\bigskip
-
-$c_k(x_k,x_{k+1})$ : coût de la {\blue transition} de $x_k$ à $x_{k+1}$ sur la période $k$.
-
-\bigskip\bigskip
-
-Trouver la {\blue trajectoire} $x_0,x_1,\ldots,x_N$ de coût total $\sum_{k=1}^Nc_k(x_k,x_{k+1})$ minimal : 
-
-peut se résoudre par la {\blue programmation dynamique}.}
-
-
-\end{frame}
-
 \subsection{Programmation dynamique : cas général}
+
+
 \begin{frame}\frametitle{Programmation dynamique}
 $V(t,x):=$ coût minimal future lorsqu'on est dans l'état $x$ à l'étape $t$.
 
@@ -679,7 +647,8 @@ Graphe orienté,& $O(m+nlog(n))$  \\
 \hline
 Graphe orienté,   & $O(m)$  \\ 
 acyclique & (Programmation
-dynamique)\\
+dynamique\\
+ &  ordre topologique) \\
 
 \hline
 Graphe orienté  & $O(nm)$  \\  

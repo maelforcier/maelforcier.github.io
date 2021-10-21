@@ -199,11 +199,11 @@ Trouver le poids minimal d'un $o$-$d$ chemin élémentaire lorsque le graphe $G=(V
 
 \bigskip
 \pause
-Preuve:
-Réduire au problème du plus court chemin élementaire.\\
+Preuve: Réductions \\
+Problème du plus court chemin élementaire.\\
 \pause
 \medskip
-Réduire au problème de chemin hamiltonien :\\
+Problème de chemin hamiltonien :\\
 \pause
 \medskip
 Prendre $c(e)=-1$ pour tout $e \in E$
@@ -417,7 +417,7 @@ Principe d'optimalité de Bellman \\
 La sous-trajectoire d'une trajectoire optimale est encore optimale:
 
  \begin{proposition}[5.2]
-  Soit $P$ un $o$-$v$ chemin avec $k$ arcs et $Q$ son sous-$o$-$u$ chemin, pù $u$ iest le sommet avant $v$ dans $P$. Si $P$ est le plus petit $o -v$ chemin parmie ceux à $k$ arcs, alors $Q$ est le plus petit $o$-$u$ parmi ceux à $k-1$ arcs.
+  Soit $P$ un $o$-$v$ chemin avec $k$ arcs et $Q$ son sous-$o$-$u$ chemin, où $u$ est le sommet avant $v$ dans $P$. Si $P$ est le plus petit $o -v$ chemin parmi ceux à $k$ arcs, alors $Q$ est le plus petit $o$-$u$ parmi ceux à $k-1$ arcs.
  \end{proposition}
  \vfill
  \pause
@@ -436,7 +436,7 @@ La sous-trajectoire d'une trajectoire optimale est encore optimale:
  Le coût minimal $f(v,k)$ d'un $o$-$v$
   chemin  à $k$ arcs vérifie l'équation de Bellman
  \begin{align*}
-  f(v, k+1) & = \min_{u \in N^-(v)} f(u, k-1) + c(u, v) \\
+  f(v, k+1) & = \min_{u \in N^-(v)} f(u, k) + c(u, v) \\
   f(v, 0) & = \begin{cases}
    0        & \text{if $v = o$} \\
    + \infty & \text{otherwise}  
@@ -464,7 +464,7 @@ ${\small \begin{array}{c|cccccccc} k & s & a & b & c & d & e & f & t
 \\ 
 \hline 0 &0 &\infty & \infty & \infty & \infty & \infty & \infty & \infty  \\ 
 \visible<2-6>{1& \infty & 3 & \infty & \infty & 3 & \infty &  5 & \infty \\}
-\visible<3-6>{2 & \infty & \infty & 5 & \infty & 8 & 7 & \infty & \infty \\}
+\visible<3-6>{2 & \infty & \infty & 4 & \infty & 8 & 7 & \infty & \infty \\}
 \visible<4-6>{3 & \infty& \infty  & 9 & 5 & 8 & \infty & \infty & 9 \\}
 \visible<5-6>{4 &
 \infty & \infty & 9 & 6 & \infty & 8 & \infty & 9 \\}
@@ -494,7 +494,7 @@ Pas de généralisation triviale aux graphes non-orientés (la réduction crée des c
 
 Converge en $O(mn)$ avec\\
 $n$: nombre de sommets\\
-$m$: nombres d'arcs
+$m$: nombre d'arcs
 
 
 \end{frame}
@@ -530,14 +530,14 @@ tel que $(u,v) \in A \Rightarrow u\preceq v$
 
 
 \begin{frame}\frametitle{Programmation dynamique}
-$V(t,x):=$ coût minimal future lorsqu'on est dans l'état $x$ à l'étape $t$.
+$V(t,x):=$ coût minimal futur lorsqu'on est dans l'état $x$ à l'étape $t$.
 
 \bigskip
 \bigskip
 
 Programmation dynamique : équation de Bellman pour tout $y$
 
-$$V(t,x)=\min_{y\in X_{k+1}}(c_t(x,y)+V(t+1,y))$$
+$$V(t,x)=\min_{y\in X_{t+1}}(c_t(x,y)+V(t+1,y))$$
 
 \bigskip
 \bigskip

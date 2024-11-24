@@ -1,0 +1,108 @@
+
+\documentclass[12pt]{article}
+%\documentclass[smallextended,numbook]{svjour3}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{pdfpages}
+\usepackage{amsfonts,dsfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm} %commenter pour style MP
+\usepackage{bm}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{algorithm2e}
+\usepackage{enumitem}
+\usepackage[capitalise]{cleveref}
+%\usepackage[capitalise,poorman]{cleveref}
+
+\setlength {\marginparwidth }{2cm}
+\usepackage{todonotes}
+\usepackage[all]{xy} 
+
+\makeatletter \let\cl@part\relax \makeatother
+
+%\usepackage[top=1cm, bottom=1cm, left=1cm, right=1cm]{geometry}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+\tikzset{offset/.style={to path={%
+    -- ($(\tikztostart)!#1cm!(\tikztotarget)$)}},
+         offset/.default=1}
+\tikzset{>=latex}
+
+\usepackage{pgfplots}
+
+\newcommand{\mf}[1]{\begin{color}{brown}\texttt{MF:#1}\end{color}}
+\newcommand{\vl}[1]{\begin{color}{blue}\texttt{VL:#1}\end{color}}
+\newcommand{\sg}[1]{\begin{color}{purple}\texttt{SG:#1}\end{color}}
+\newcommand{\TODO}{\begin{color}{red}TODO\end{color}}
+
+\newcommand{\tco}{tCO_2eq}
+
+\usepackage{subcaption}
+%\usepackage[colorinlistoftodos,bordercolor=orange,backgroundcolor=orange!20,linecolor=orange,textsize=scriptsize]{todonotes}
+
+
+%% Theorems
+\newtheorem{hypo}{Assumption}
+\Crefname{hypo}{Assumption}{Assumptions}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{defi}[theorem]{Definition}
+\newtheorem{conj}{Conjecture}
+\newtheorem{nota}{Notation}
+\theoremstyle{remark}
+\newtheorem{exa}{Example}
+
+
+
+
+
+\title{TD Modèle d'évaluation intégré simplifié}
+
+\author{Maël Forcier}
+
+
+\begin{document}
+\maketitle
+
+
+\section{Modèle de système dynamique : World3 du club de Rome simplifié}
+\subsection{Modélisation}
+Variable émissions de GES en $G\tco$\\
+Variable PIB en Md\$\\
+Variable Température \\
+Variable Population \\
+Contrôle taxe carbone en $\$ \backslash \tco$ \\
+Part de l'économie carbonée en \% \\
+Variable intensité carbone du PIB en $\tco \backslash \$ $
+\\
+Dynamique : \\
+Rétroaction négative de la hausse de la température sur le $PIB$ \\
+Taxe carbone fait ralentir la part d'économie carbonée à court terme\\
+Taxe carbone fait augmenter l'investissement en décarboné à long terme.\\
+Selon Eurostat, l'investissement représente 22 \% du PIB contre 78 \% pour la consommation. Pour simplifier, on fixe à $I_t=Q_t/4$
+
+Les équations de température
+
+\subsection{Calcul de la dynamique : World 3}
+
+\subsection{Critiques}
+\begin{enumerate}
+\item Quelles hypothèses pourraient être ajoutées ?
+\item Dynamique
+\end{enumerate}
+\section{Modèle d'optimisation dynamique : DICE (Dynamic Integrated Climate Economy) de Nordhaus simplifié}
+
+\subsection{Programmation Dynamique}
+
+\subsection{Résolution }
+\end{document}

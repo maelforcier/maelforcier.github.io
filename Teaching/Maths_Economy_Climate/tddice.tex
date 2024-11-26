@@ -34,11 +34,12 @@
          offset/.default=1}
 \tikzset{>=latex}
 
+
+\renewcommand{\thesection}{\Alph{section}}
 \usepackage{pgfplots}
 
 \newcommand{\mf}[1]{\begin{color}{brown}\texttt{MF:#1}\end{color}}
-\newcommand{\vl}[1]{\begin{color}{blue}\texttt{VL:#1}\end{color}}
-\newcommand{\sg}[1]{\begin{color}{purple}\texttt{SG:#1}\end{color}}
+
 \newcommand{\TODO}{\begin{color}{red}TODO\end{color}}
 
 \newcommand{\tco}{tCO_2eq}
@@ -66,7 +67,9 @@
 
 
 
-\title{TD Modèle d'évaluation intégré simplifié}
+\title{TD \\Modèle 
+DICE (Dynamic Integrated Climate Economy) \\
+de Nordhaus simplifié }
 
 \author{Maël Forcier}
 
@@ -75,8 +78,20 @@
 \maketitle
 
 
-\section{Modèle de système dynamique : World3 du club de Rome simplifié}
-\subsection{Modélisation}
+\section{Modélisation}
+
+Le modèle de Nordhaus est un modèle de macroéconomie qui étudie l'évolution de l'économie mondiale. Le modèle est dynamique, les variables non-constantes seront indicés par le temps $t$. La variable principale est le capital, noté $K_t$, c'est-à-dire la valeur en \$ de tous les biens matériels ou immatériels dans le monde. Le produit intérieur brut (PIB) en \$ noté $Q_t$ est la somme de tous les revenus annuels d'une économie. La consommation notée $C_t$ est la somme en \$ de tous les biens et services perissables utilisés pendant une année.L'investissement en \$ noté $I_t$ est l'ensemble des 
+
+\begin{enumerate}
+\item On suppose que le PIB n'est utilisé que pour la consommation et l'investissement. Proposer une équation reliant $Q_t$, $C_t$ et $I_t$.
+\end{enumerate}
+\textit{Réponse :} $Q_{t}=C_t + I_t$
+\begin{enumerate}[resume]
+\item  Le capital accumulé se déprécie à un taux $\delta_K$ qui le fait diminuer entre chaque étape, mais l'investissement permet de générer du nouveau capital. Proposer une équation dite de dynamique reliant $K_{t}$, $K_{t-1}$, $I_t$ et $\delta_K$.
+\end{enumerate}
+\textit{Réponse :} $K_{t}=(1-\delta_K)K_{t-1}+I_t$
+
+
 Variable émissions de GES en $G\tco$\\
 Variable PIB en Md\$\\
 Variable Température \\
@@ -93,16 +108,23 @@ Selon Eurostat, l'investissement représente 22 \% du PIB contre 78 \% pour la c
 
 Les équations de température
 
-\subsection{Calcul de la dynamique : World 3}
+\section{Scénario contrôle total}
 
-\subsection{Critiques}
-\begin{enumerate}
+
+\section{Scénario sans contrôle}
+
+
+\section{Discussion et critiques}
+\begin{enumerate}[resume]
+\item Quelles variables sont endogènes, exogènes ?
+\item Comment qualifier le modèle top-down/bottom-up, statique/dynamique, stochastique/déterministe, d'optimisation, discret/continu ?
 \item Quelles hypothèses pourraient être ajoutées ?
-\item Dynamique
 \end{enumerate}
-\section{Modèle d'optimisation dynamique : DICE (Dynamic Integrated Climate Economy) de Nordhaus simplifié}
 
-\subsection{Programmation Dynamique}
+\section{Comparaison avec le papier d'origine}
+\begin{enumerate}[resume]
+\item Quelles sont les simplifications que l'on a faite par rapport au modèle DICE du papier de Nordhaus de 1992 ?
+\end{enumerate}
 
-\subsection{Résolution }
+
 \end{document}

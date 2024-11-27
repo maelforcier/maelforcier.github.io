@@ -2,7 +2,7 @@
 \documentclass[12pt]{article}
 %\documentclass[smallextended,numbook]{svjour3}
 
-\usepackage[english]{babel}
+\usepackage[french]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{pdfpages}
 \usepackage{amsfonts,dsfont}
@@ -17,14 +17,14 @@
 \usepackage[capitalise]{cleveref}
 %\usepackage[capitalise,poorman]{cleveref}
 
-\setlength {\marginparwidth }{2cm}
+\setlength {\marginparwidth }{1.9cm}
 \usepackage{todonotes}
 \usepackage[all]{xy} 
 
 \makeatletter \let\cl@part\relax \makeatother
 
-%\usepackage[top=1cm, bottom=1cm, left=1cm, right=1cm]{geometry}
-\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
+%\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -77,15 +77,10 @@
 
 
 \def\NN{\mathbb{N}}
-
-
 \title{TD \\Modèle 
 DICE (Dynamic Integrated Climate Economy) \\
 de Nordhaus simplifié }
-
-\author{Maël Forcier}
-
-
+%\author{Maël Forcier}
 \begin{document}
 \maketitle
 
@@ -115,7 +110,7 @@ Pour prendre en compte le réchauffement climatique, Nordhaus suppose que le PIB
 }
 \rep{ $Q_{n}=A \Omega_n K_n$ }
 Selon Eurostat, l'investissement représente environ 23 \% du PIB en Europe et cette part est stable entre 2005 et 2009. Pour simplifier, on considèrera que l'investissement représente un quart du PIB : $I_n=Q_n/4$.
-\ques{Avec cette hypothèses, simplifier les équations pour obtenir une relation entre $K_n$, $K_{n-1}$, $A$, $\Omega_n$ et $\delta$. \label{ques:dynamique_K_1}}
+\ques{Avec cette hypothèses, simplifier les équations pour obtenir une relation entre $K_n$, $K_{n-1}$, $\Omega_n$ et $\delta$. \label{ques:dynamique_K_1}}
 \rep{\begin{equation*} K_n=\frac{1- \delta}{1- \frac{A\Omega_n}{4}} K_{n-1}\end{equation*}}
 
 
@@ -176,7 +171,7 @@ On considère dans cette partie un scénario où l'on décide de contrôler tota
 \ques{Calculer la température à tout temps $n$ en fonction de la température $T_0$ au début de l'expérience. }
 \rep{$\forall n, T_n =T_0 = 0,8$°C.}
 
-\ques{Simplifier l'équation de la question \ref{ques:dynamique_K_1} pour obtenir une relation entre $K_n$, $K_{n-1}$, $A$ et $\delta$.\label{ques:dynamique_K_2} }
+\ques{Simplifier l'équation de la question \ref{ques:dynamique_K_1} pour obtenir une relation entre $K_n$, $K_{n-1}$ et $\delta$.\label{ques:dynamique_K_2} }
 \rep{
 \begin{equation*}
 \forall n, \quad \Omega_n = \frac{1-0,05}{1+0,0133 (\frac{T_0}{3})}^2=\frac{0,95}{1,000945778}=0,9491
@@ -187,54 +182,59 @@ On considère dans cette partie un scénario où l'on décide de contrôler tota
 }
 
 \ques{Comment peut-on qualifier mathématiquement la suite $(K_n)_{n\in \NN}$ ? \label{ques:suite_geo}}
-\rep{$(K_n)_{n\in \NN}$ est une suite géométrique de raison $\frac{1- \delta}{1- 0,2373 A}$.}
+\rep{$(K_n)_{n\in \NN}$ est une suite géométrique de raison $\frac{1- \delta}{1- 0,2373}$.}
 
-\ques{Calculer $K_n$ pour tout $n$, en fonction de $K_0$, $\delta$ et $A$.}
+\ques{Calculer $K_n$ pour tout $n$, en fonction de $K_0$ et $\delta$.}
 \rep{\begin{equation*}
-\forall n, \quad  K_n = K_0 \big(\frac{1- \delta}{1- 0,2373 A}\big)^n 
+\forall n, \quad  K_n = K_0 \left(\frac{1- \delta}{1- 0,2373}\right)^n 
 \end{equation*}}
 
 \section{Scénario sans contrôle}
-On considère dans cette partie un scénario où l'on décide de ne pas du tout contrôler les émissions : $\forall n, \mu_n=0$.
+On considère dans cette partie un scénario où l'on décide de ne pas du tout contrôler les émissions, de sorte que $\mu_n=0$ pour tout $n$.
 \ques{La suite $(K_n)_{n\in \NN}$ vérifie-t-elle la même propriété qu'à la question \ref{ques:suite_geo} ?}
 \rep{Non, dans ce cas la suite $(T_n)_{n\in \NN}$, et donc la suite $(\Omega_n)_{n\in \NN}$, n'est pas constante et dépend de $(K_n)_{n\in \NN}$. La suite $(K_n)_{n\in \NN}$ n'est donc pas géométrique.}
 
 
-\ques{Montrer qu'en combinant le résultat de la question \ref{ques:dynamique_K_1} et l'hypothèse d'absence de contrôle $\mu_n =0$, on obtient
+\ques{\label{q15}Montrer qu'en combinant le résultat de la question \ref{ques:dynamique_K_1} et l'hypothèse d'absence de contrôle $\mu_n =0$, on obtient
 \begin{equation*} 
-K_n=\frac{1- \delta}{1- \frac{A}{4(1-d_n)}} K_{n-1}.\end{equation*}
+K_n=\frac{1- \delta}{1- \frac{1}{4(1-d_n)}} K_{n-1}.\end{equation*}
 \label{ques:dynamique_K_3}
 }
 
 \section{Contrôler ou pas selon la fonction dégât}
 
-On suppose que le terme $d_n$ est petit. Des développements limités permettent de simplifier l'équation de la question \ref{ques:dynamique_K_3} pour obtenir :
+On suppose que le terme $d_n$ est petit ; un développement limité permet de simplifier la relation obtenue à la question \ref{q15}, pour obtenir la relation
 \begin{equation*} 
-K_n=(1- \delta)\frac{4}{3}A(1-\frac{d_n}{3}) K_{n-1}\end{equation*}
-On suppose que $A=1$.
-\ques{En comparant cette équation à celle de la question \ref{ques:dynamique_K_2}, montrer que l'équation $d_n>0,05$ permet de donner une procédure simplifiée pour choisir de contrôler ou non les émissions.
-On appelle ce type de procédure une heuristique.}
+K_n=\frac{4}{3}(1- \delta)\left(1-\frac{d_n}{3}\right) K_{n-1}.
+\end{equation*}
+Rappelons que dans le cas d'un contrôle total, la croissance du capital est géométrique de raison 
+$$
+r_\star = \frac{K_n}{K_{n-1}} = \frac{1- \delta}{1- 0,2373}.
+$$
+Dans cette partie, on suppose que la stratégie du planificateur est la suivante. Tant que la croissance du capital $r_n = K_n / K_{n-1}$ est supérieure à la croissance $r_\star$ obtenue quand le contrôle est total, on ne fait rien$\,$; en revanche, dès que $r_n \leq r_\star$, on contrôle totalement. Autrement dit, on suppose que
+$$
+ \mu_n = 0 \quad \text{si} \quad r_n > r_\star \quad \text{et} \quad \mu_n = 1 \quad \text{sinon.}
+$$
+
+\ques{Montrer que cette stratégie amène à contrôler totalement si et seulement si $d_n \geq 0.05.$}
 \rep{On choisit de contrôler les émissions lorsque le facteur multiplicatif du scénario contrôlé est supérieur au scénario non contrôlé :
 \begin{equation*}
-(1-\delta)\frac{4}{3}(1-\frac{d_n}{3}) <\frac{1-\delta}{1-0,2373A}
-\end{equation*}
-\begin{equation*}
-1-\frac{d_n}{3} <\frac{3}{4}\times \frac{1}{0,7627}
-\end{equation*}
-\begin{equation*}
-0,05=3-\frac{9}{4 \times 0,7627} < d_n
+\begin{aligned}
+&(1-\delta)\frac{4}{3}\left(1-\frac{d_n}{3}\right) < \frac{1-\delta}{1-0,2373} \\
+\text{ssi} \quad &1-\frac{d_n}{3} < \frac{3}{4}\times \frac{1}{0,7627} \\
+\text{ssi} \quad &0,05 = 3-\frac{9}{4 \times 0,7627} < d_n
+\end{aligned}
 \end{equation*}
 }
 
-
-\ques{Montrer qu'avec la fonction de Nordhaus obtenue à la question \ref{ques:degat_nordhaus}, l'heuristique conseille toujours de ne pas contrôler les émissions.}
+\ques{Avec la fonction dégât de Nordhaus obtenue à la question \ref{ques:degat_nordhaus}, déterminer la température en dessous de laquelle la stratégie suggère de ne pas intervenir.}
 \rep{Lecture graphique ou calculer $3\times \sqrt{0,05/0,0133}=5,8$ °C.}
 
 En novembre 2024, le NGFS (Network for Greening the Financial System) a publié une étude qui estime qu'un réchauffement climatique de 2°C par rapport à l'ère pré-industrielle (1850), conduirait à une baisse du PIB de 15 \%. Par ailleurs, les études du GIEC montrent que les dégâts augmentent très rapidement avec chaque dixième de degré : on suppose maintenant que les dégâts évoluent comme une fonction dépendant linéairement du cube de la température.
 \ques{Proposer une fonction dégât avec les hypothèses du NGFS.}
-\rep{\begin{equation*} d_n = 0,15 (\frac{T_n}{2})^3\end{equation*}}
+\rep{\begin{equation*} d_n = 0,15 \left(\frac{T_n}{2}\right)^3\end{equation*}}
 
-\ques{Montrer qu'avec la fonction dégât du NGFS, l'heuristique conseille de contrôler dès 1,4 °C de réchauffement.}
+\ques{Avec la fonction dégât du NGFS, quelle est la température au dessus de laquelle la stratégie impose un contrôle total ?}
 \rep{Lecture graphique ou calculer $2\times (0,05/0,15)^{1/3}=1,39$ °C.}
 
 

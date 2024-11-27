@@ -256,8 +256,8 @@ Atténuation du changement climatique
 
 \section{Comment compter les émissions de gaz à effet de serre aujourd'hui ?}
 
-\begin{frame}{Citepa l'Insee des polluants et des GES}\url{https://www.citepa.org/wp-content/uploads/publications/ominea/OMINEA_2024.pdf}
-\end{frame}
+% \begin{frame}{Citepa l'Insee des polluants et des GES}\url{https://www.citepa.org/wp-content/uploads/publications/ominea/OMINEA_2024.pdf}
+% \end{frame}
 
 \begin{frame}{Potentiel de réchauffement global (PRG)}
 \centering
@@ -368,26 +368,33 @@ Hydroélectricité\\
 \end{frame}
 
 \begin{frame}{Electricité selon différents pays}
-\begin{tabular}{c|c|c|c|c}
- & France & Norvège & Brésil & Chine \\ \hline
-Charbon &1,2 \% \\ 
-Pétrole &1,4 \% \\
-Gaz &9,5 \% \\
-Nucléaire & 62 \% \\
-Hydroélectricité & 10,7 \% \\
- Eolien &8,0 \% \\
-  PV &4,3 \% \\
-  Autres & \\ \hline
-  Facteur d'émissions
+\begin{tabular}{c|c|c|c|c|c}
+ & France & Brésil & Chine & Chine &Facteurs\\
+ &2022 & 2021 & 1990 & 2022 &  d'émissions \\
+ & & & & & ($kgCO_2/MWh)$\\ \hline
+Charbon &1,2 \% & 3,7 \% & 72,2 \% & 61,7 \% & 820 \\ 
+Pétrole &1,4 \% & 3,1 \% & 7,8 \% & 0,1 \% & 650 \\
+Gaz &9,5 \% & 13,3 \% & 0,4 \% & 3,0 \% & 490 \\
+Nucléaire & 62,0 \% & 2,2 \% & 0 \% & 4,7 \% & 12 \\
+Hydroélectricité & 10,7 \% & 55,3 \% & 19,5 \% & 15,1 \% & 24\\
+ Eolien &8,0 \% & 11,0 \% & 0 \% & 8,5 \% & 11\\
+  PV &4,3 \% &2,6 \% & 0 \% & 4,8 \% & 44\\
+  Biomasse & 1,7 \% &8,5 \% & 2,4 \% & 2,0 \% & 0 \\ 
+  Autres & 1,2 \% & 0,30 \% & 0,1 \% & 0,1 \% \\\hline
+  Facteur & & & & \\
+  d'émissions & 79 & 132 & 650 & 529 \\
+  ($kgCO_2/MWh$) & & & &
 \end{tabular}
 
 \end{frame}
 
-\begin{frame}{Efficacité énergétique}
-Energie primaire
-Energie finale
-Energie utile
+\begin{frame}{Différentes comptabilités énergétiques}
+\centering
+\includegraphics[scale=0.18]{images/energies_reveilleur.png}
+\footnotesize{Source : Le Réveilleur, Taux de retour énergétique : J.M. Jancovici dans l'erreur ?}
 \end{frame}
+
+
 
 \section{Modèles d'évalutions intégrés}
 
@@ -405,7 +412,6 @@ Energie utile
 
 \begin{frame}
 \frametitle{Equation de Kaya}
-Equation de Kaya
 \begin{equation*}
 GES=POP \times \frac{PIB}{POP} \times \frac{Energie}{PIB}\times \frac{GES}{Energie}
 \end{equation*}
@@ -415,22 +421,32 @@ Modèle Top-Down très simplifié
 
 \begin{frame}
 \frametitle{Modèle Bottom-Up : exemple du parc de logement}
-\center{38 millions de logements}
-\vspace{0,5cm}
+\center{38 millions de logements \\
+82 \% de résidences principales\\ 10 \% de résidences secondaires, 8 \% de logements vacants}
+\vspace{0,2cm}
 \begin{columns}
-  \begin{column}{0.5\textwidth}
-Maison individuelle 
+  \begin{column}{0.6\textwidth}
+Maisons individuelles 54,8 \%
 
   \includegraphics[scale=0.11]{images/maison_individuelle.jpg}
 \end{column}
-\begin{column}{0.5\textwidth}
-Logements collectifs
+\begin{column}{0.4\textwidth}
+Logements collectifs 45,2 \%
 
   \includegraphics[scale=0.12]{images/batiment_collectif.jpg}
 \end{column}
 \end{columns}
-
-
+\vspace{0.5cm}
+Résidences principales par énergie de chauffage
+\vspace{0.3cm}
+\small{
+\begin{tabular}{c|c|c|c|c}
+& Electricité & Gaz & Fioul & Bois et \\
+& dont PAC & & et autres &réseau de chaleur \\ \hline 
+Millions de logements & 11,47 & 10,84 & 3,08 & 4,83\\
+Pourcentage & 38,0 \% & 35,9 \% & 10,2 \% & 16,0 \%
+\end{tabular}
+}
 \end{frame}
 
 

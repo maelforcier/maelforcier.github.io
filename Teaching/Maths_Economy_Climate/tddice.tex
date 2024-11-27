@@ -108,8 +108,10 @@ L'investissement en \$ noté $I_n$ est l'ensemble des valeurs crées sur une ann
 \end{enumerate}
 \rep{ $K_{n}=(1-\delta)K_{n-1}+I_n$ }
 
-L'équation de Cobb-Douglas, classique en macroéconomie pour étudier la croissance, fait l'hypo-thèse que le PIB $Q_n$ est égal au produit $AK_n^\gamma L_n^{1-\gamma}$ où $A$ est appelé le facteur de productivité, $\gamma$ l'élasticité du capital et $L_n$ le travail, souvent approximé comme étant égal à la population. Pour simplifier, nous négligerons l'effet de la population et prendrons une élasticité du capital de $\gamma=1$. Pour prendre en compte le réchauffement climatique, Nordhaus suppose que le PIB $Q_n$ est également proportionnel à un facteur $\Omega_n$ qui modélise les effets du climat. 
-\ques{  Proposer une équation de Cobb-Douglas simplifiée (sans le travail) et qui prend en compte le climat en reliant $Q_{n}$, $A$,$\Omega_n$ et $K_{n}$.
+L'équation de Cobb-Douglas, classique en macroéconomie pour étudier la croissance, fait l'hypo-thèse que le PIB $Q_n$ est égal au produit $AK_n^\gamma L_n^{1-\gamma}$ où $A$ est appelé le facteur de productivité, $\gamma$ l'élasticité du capital et $L_n$ le travail, souvent approximé comme étant égal à la population.
+Pour simplifier, nous négligerons l'effet de la population, nous prendrons une élasticité du capital de $\gamma=1$ et nous prendrons un facteur de productivité $A=1$.
+Pour prendre en compte le réchauffement climatique, Nordhaus suppose que le PIB $Q_n$ est également proportionnel à un facteur $\Omega_n$ qui modélise les effets du climat. 
+\ques{  Proposer une équation de Cobb-Douglas simplifiée (sans le travail) et qui prend en compte le climat en reliant $Q_{n}$, $\Omega_n$ et $K_{n}$.
 }
 \rep{ $Q_{n}=A \Omega_n K_n$ }
 Selon Eurostat, l'investissement représente environ 23 \% du PIB en Europe et cette part est stable entre 2005 et 2009. Pour simplifier, on considèrera que l'investissement représente un quart du PIB : $I_n=Q_n/4$.
@@ -161,7 +163,7 @@ E_n=(1-\mu_n)\sigma Q_n
 \end{equation*}
 Avec $\sigma$ une constante qui représente le facteur d'émission du PIB dans un scénario sans contrôle $\mu_n=0$. 
 Dans le cas $\mu_n=1$, le contrôle est total, on n'émet pas de gaz à effet de serre.
-\ques{Exprimer $T_n$ en fonction de $\sigma$, $\mu_1, \cdots, \mu_n$ et $Q_1, \cdots ,Q_n$}.
+\ques{Exprimer $T_n$ en fonction de $T_0$, $\sigma$, $\mu_1, \dots, \mu_n$ et $Q_1, \dots ,Q_n$}.
 \rep{\begin{equation*}T_n= T_0+\frac{\sigma}{2000} \sum_{k=1}^n (1-\mu_k) Q_k  \end{equation*}}
 
 Enfin, Nordhaus estime que le coût de l'investissement $\alpha_n$ dans les technologies bas carbone s'exprime comme $0,0686 \mu_n^{2,887}$. Pour simplifier, on pose $\alpha_n = 0,05\mu_n^3$. Ceci donne 
@@ -171,7 +173,7 @@ Enfin, Nordhaus estime que le coût de l'investissement $\alpha_n$ dans les tech
 
 \section{Scénario contrôle total}
 On considère dans cette partie un scénario où l'on décide de contrôler totalement les émissions : $\forall n, \mu_n=1$.
-\ques{Estimer à l'aide du graphique la température moyenne au début de l'expérience Calculer la température à tout temps $n$ en fonction de la température $T_0$ au début de l'expérience. }
+\ques{Calculer la température à tout temps $n$ en fonction de la température $T_0$ au début de l'expérience. }
 \rep{$\forall n, T_n =T_0 = 0,8$°C.}
 
 \ques{Simplifier l'équation de la question \ref{ques:dynamique_K_1} pour obtenir une relation entre $K_n$, $K_{n-1}$, $A$ et $\delta$.\label{ques:dynamique_K_2} }
@@ -197,15 +199,10 @@ On considère dans cette partie un scénario où l'on décide de ne pas du tout 
 \ques{La suite $(K_n)_{n\in \NN}$ vérifie-t-elle la même propriété qu'à la question \ref{ques:suite_geo} ?}
 \rep{Non, dans ce cas la suite $(T_n)_{n\in \NN}$, et donc la suite $(\Omega_n)_{n\in \NN}$, n'est pas constante et dépend de $(K_n)_{n\in \NN}$. La suite $(K_n)_{n\in \NN}$ n'est donc pas géométrique.}
 
-\ques{Exprimer $Q_n$ en fonction de $T_n$,$T_{n-1}$ et $\sigma$, puis exprimer $Q_n$ en fonction de $K_n$,$K_{n-1}$ et $\delta$. En déduire une relation entre $T_n-T_{n-1}$ et $K_n - K_{n-1}$}
-\rep{$Q_n = 2000 \sigma (T_n -T_{n-1}) = 4 (1- \delta) (K_n -K_{n-1})$}
 
-\ques{En déduire une relation, entre $T_n$, $T_0$, $K_n$, $K_0$, $\sigma$ et $\delta$}
-\rep{En télescopant, on obtient \begin{equation*}  T_n -T_0 = \frac{4(1-\delta)}{2000\sigma} (K_n -K_0)\end{equation*}}
-
-\ques{Montrer qu'en combinant le résultat de la question \ref{ques:dynamique_K_1} et l'hypothèse d'absence de contrôle $\mu_n =0$. On obtient
+\ques{Montrer qu'en combinant le résultat de la question \ref{ques:dynamique_K_1} et l'hypothèse d'absence de contrôle $\mu_n =0$, on obtient
 \begin{equation*} 
-K_n=\frac{1- \delta}{1- \frac{A}{4(1-d_n)}} K_{n-1}\end{equation*}
+K_n=\frac{1- \delta}{1- \frac{A}{4(1-d_n)}} K_{n-1}.\end{equation*}
 \label{ques:dynamique_K_3}
 }
 
@@ -215,7 +212,7 @@ On suppose que le terme $d_n$ est petit. Des développements limités permettent
 \begin{equation*} 
 K_n=(1- \delta)\frac{4}{3}A(1-\frac{d_n}{3}) K_{n-1}\end{equation*}
 On suppose que $A=1$.
-\ques{En comparant cette équation à celle de la question \ref{ques:dynamique_K_2}, montrer que l'équation $d_t>0,05$ permet de donner une procédure simplifiée pour choisir de contrôler ou non les émissions.
+\ques{En comparant cette équation à celle de la question \ref{ques:dynamique_K_2}, montrer que l'équation $d_n>0,05$ permet de donner une procédure simplifiée pour choisir de contrôler ou non les émissions.
 On appelle ce type de procédure une heuristique.}
 \rep{On choisit de contrôler les émissions lorsque le facteur multiplicatif du scénario contrôlé est supérieur au scénario non contrôlé :
 \begin{equation*}

@@ -1,5 +1,7 @@
 
-\documentclass[12pt]{article}
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsfonts,amsmath,amssymb,graphics}
+ \usepackage[all]{xy}
 %\documentclass[smallextended,numbook]{svjour3}
 
 \usepackage[french]{babel}
@@ -23,7 +25,7 @@
 
 \makeatletter \let\cl@part\relax \makeatother
 
-\usepackage[top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 %\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -82,10 +84,30 @@ DICE (Dynamic Integrated Climate Economy) \\
 de Nordhaus simplifié }
 %\author{Maël Forcier}
 \begin{document}
-\maketitle
+
+	\noindent
+	{\textbf{Universit\'e de Nantes} \hfill Ann\'ee 2024-2025}\\
+	{\textbf{XLG3TU020 - Transition Écologique}\\
+		% Titre
+		\medskip
+\medskip
+\medskip
+\medskip
+
+		
+		\hrule
+		\begin{center} {\Large \sc Modèle DICE (Dynamic Integrated Climate Economy)}
+		\end{center}
+		\hrule
+		\bigskip
+		
 
 
-\section{Modélisation économique}
+\medskip
+\medskip
+
+
+\section*{\sc Modélisation économique}
 
 Le modèle DICE, imaginé en 1992 par Nordhaus, est un modèle de macroéconomie qui étudie l'évolution de l'économie mondiale.
 Le modèle est dynamique, les variables non-constantes seront indicés par les pas de temps $n$.
@@ -114,7 +136,7 @@ Selon Eurostat, l'investissement représente environ 23 \% du PIB en Europe et c
 \rep{\begin{equation*} K_n=\frac{1- \delta}{1- \frac{A\Omega_n}{4}} K_{n-1}\end{equation*}}
 
 
-\section{Modélisation de l'effet du climat}
+\section*{\sc Modélisation de l'effet du climat}
 
 Nous allons maintenant modéliser les dégâts causées par le réchauffement climatique. Nordhaus choisit de de modéliser $\Omega_n$ comme le rapport d'un accroissement du à un taux noté $\alpha_n$ modélisant les coûts d'investissement dans les technologies bas carbone et à une dépréciation du à un taux $d_n$ modélisant les dommages que le réchauffement climatique cause sur le PIB :
 \begin{equation*}
@@ -166,7 +188,7 @@ Enfin, Nordhaus estime que le coût de l'investissement $\alpha_n$ dans les tech
 \Omega_n = \frac{1-0,05\mu_n^3}{1+0,0133 (\frac{T_n}{3})^2}
 \end{equation*}
 
-\section{Scénario contrôle total}
+\section*{\sc Scénario contrôle total}
 On considère dans cette partie un scénario où l'on décide de contrôler totalement les émissions : $\forall n, \mu_n=1$.
 \ques{Calculer la température à tout temps $n$ en fonction de la température $T_0$ au début de l'expérience. }
 \rep{$\forall n, T_n =T_0 = 0,8$°C.}
@@ -189,7 +211,7 @@ On considère dans cette partie un scénario où l'on décide de contrôler tota
 \forall n, \quad  K_n = K_0 \left(\frac{1- \delta}{1- 0,2373}\right)^n 
 \end{equation*}}
 
-\section{Scénario sans contrôle}
+\section*{\sc Scénario sans contrôle}
 On considère dans cette partie un scénario où l'on décide de ne pas du tout contrôler les émissions, de sorte que $\mu_n=0$ pour tout $n$.
 \ques{La suite $(K_n)_{n\in \NN}$ vérifie-t-elle la même propriété qu'à la question \ref{ques:suite_geo} ?}
 \rep{Non, dans ce cas la suite $(T_n)_{n\in \NN}$, et donc la suite $(\Omega_n)_{n\in \NN}$, n'est pas constante et dépend de $(K_n)_{n\in \NN}$. La suite $(K_n)_{n\in \NN}$ n'est donc pas géométrique.}
@@ -201,7 +223,7 @@ K_n=\frac{1- \delta}{1- \frac{1}{4(1-d_n)}} K_{n-1}.\end{equation*}
 \label{ques:dynamique_K_3}
 }
 
-\section{Contrôler ou pas selon la fonction dégât}
+\section*{\sc Contrôler ou pas selon la fonction dégât}
 
 On suppose que le terme $d_n$ est petit ; un développement limité permet de simplifier la relation obtenue à la question \ref{q15}, pour obtenir la relation
 \begin{equation*} 
@@ -211,12 +233,12 @@ Rappelons que dans le cas d'un contrôle total, la croissance du capital est gé
 $$
 r_\star = \frac{K_n}{K_{n-1}} = \frac{1- \delta}{1- 0,2373}.
 $$
-Dans cette partie, on suppose que la stratégie du planificateur est la suivante. Tant que la croissance du capital $r_n = K_n / K_{n-1}$ est supérieure à la croissance $r_\star$ obtenue quand le contrôle est total, on ne fait rien$\,$; en revanche, dès que $r_n \leq r_\star$, on contrôle totalement. Autrement dit, on suppose que
+Dans cette partie, on suppose que la stratégie du planificateur est la suivante. Tant que la croissance du capital $r_n = K_n / K_{n-1}$ est supérieure à la croissance $r_\star$ obtenue quand le contrôle est total, on ne fait rien$\,$; en revanche, dès que $r_n \leqslant r_\star$, on contrôle totalement. Autrement dit, on suppose que
 $$
  \mu_n = 0 \quad \text{si} \quad r_n > r_\star \quad \text{et} \quad \mu_n = 1 \quad \text{sinon.}
 $$
 
-\ques{Montrer que cette stratégie amène à contrôler totalement si et seulement si $d_n \geq 0.05.$}
+\ques{Montrer que cette stratégie amène à contrôler totalement si et seulement si $d_n \geqslant 0.05.$}
 \rep{On choisit de contrôler les émissions lorsque le facteur multiplicatif du scénario contrôlé est supérieur au scénario non contrôlé :
 \begin{equation*}
 \begin{aligned}
@@ -244,7 +266,7 @@ En novembre 2024, le NGFS (Network for Greening the Financial System) a publié 
 \caption{Dégâts en fonction de la température}
 \end{figure}
 
-\section{Discussion et critiques}
+\section*{\sc Discussion et critiques}
 \begin{enumerate}[resume]
 \item Quelles variables sont endogènes, c'est-à-dire qu'elles sont calculées par le modèle ? Quelles variables sont exogènes, c'est-à-dire fixées par hypothèse grâce à des données d'autres études ?
 \item Comment qualifier le modèle ? Top-down ou bottom-up ? Statique ou dynamique ? Stochastique ou déterministe ? Modèle d'optimisation ou non ? Discret ou continu ?

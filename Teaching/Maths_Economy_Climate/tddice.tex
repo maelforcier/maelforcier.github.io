@@ -51,7 +51,7 @@
 \end{enumerate}}
 
 \newcommand{\rep}[1]{\textit{Réponse :} #1 \\}
-%\renewcommand{\rep}[1]{ }
+\renewcommand{\rep}[1]{ }
 
 
 
@@ -86,7 +86,7 @@ de Nordhaus simplifié }
 \begin{document}
 
 	\noindent
-	{\textbf{Universit\'e de Nantes} \hfill Ann\'ee 2024-2025}\\
+	{\textbf{Universit\'e de Nantes} \hfill Ann\'ee 2025-2026}\\
 	{\textbf{XLG3TU020 - Transition Écologique}\\
 		% Titre
 		\medskip
@@ -125,7 +125,7 @@ L'investissement en \$ noté $I_n$ est l'ensemble des valeurs crées sur une ann
 \end{enumerate}
 \rep{ $K_{n}=(1-\delta)K_{n-1}+I_n$ }
 
-L'équation de Cobb-Douglas, classique en macroéconomie pour étudier la croissance, fait l'hypo-thèse que le PIB $Q_n$ est égal au produit $AK_n^\gamma L_n^{1-\gamma}$ où $A$ est appelé le facteur de productivité, $\gamma$ l'élasticité du capital et $L_n$ le travail, souvent approximé comme étant égal à la population.
+L'équation de Cobb-Douglas, classique en macroéconomie pour étudier la croissance, fait l'hypothèse que le PIB $Q_n$ est égal au produit $AK_n^\gamma L_n^{1-\gamma}$ où $A$ est appelé le facteur de productivité, $\gamma$ l'élasticité du capital et $L_n$ le travail, souvent approximé comme étant égal à la population.
 Pour simplifier, nous négligerons l'effet de la population, nous prendrons une élasticité du capital de $\gamma=1$ et nous prendrons un facteur de productivité $A=1$.
 Pour prendre en compte le réchauffement climatique, Nordhaus suppose que le PIB $Q_n$ est également proportionnel à un facteur $\Omega_n$ qui modélise les effets du climat. 
 \ques{  Proposer une équation de Cobb-Douglas simplifiée (sans le travail) et qui prend en compte le climat en reliant $Q_{n}$, $\Omega_n$ et $K_{n}$.
@@ -138,7 +138,7 @@ Selon Eurostat, l'investissement représente environ 23 \% du PIB en Europe et c
 
 \section*{\sc Modélisation de l'effet du climat}
 
-Nous allons maintenant modéliser les dégâts causées par le réchauffement climatique. Nordhaus choisit de de modéliser $\Omega_n$ comme le rapport d'un accroissement du à un taux noté $\alpha_n$ modélisant les coûts d'investissement dans les technologies bas carbone et à une dépréciation du à un taux $d_n$ modélisant les dommages que le réchauffement climatique cause sur le PIB :
+Nous allons maintenant modéliser les dégâts causées par le réchauffement climatique. Nordhaus choisit de modéliser $\Omega_n$ comme le rapport d'un accroissement du à un taux noté $\alpha_n$ modélisant les coûts d'investissement dans les technologies bas carbone et à une dépréciation du à un taux $d_n$ modélisant les dommages que le réchauffement climatique cause sur le PIB :
 \begin{equation*}
 \Omega_n=\frac{1-\alpha_n}{1+d_n}
 \end{equation*}
@@ -183,10 +183,13 @@ Dans le cas $\mu_n=1$, le contrôle est total, on n'émet pas de gaz à effet de
 \ques{Exprimer $T_n$ en fonction de $T_0$, $\sigma$, $\mu_1, \dots, \mu_n$ et $Q_1, \dots ,Q_n$}.
 \rep{\begin{equation*}T_n= T_0+\frac{\sigma}{2000} \sum_{k=1}^n (1-\mu_k) Q_k  \end{equation*}}
 
-Enfin, Nordhaus estime que le coût de l'investissement $\alpha_n$ dans les technologies bas carbone s'exprime comme $0,0686 \mu_n^{2,887}$. Pour simplifier, on pose $\alpha_n = 0,05\mu_n^3$. Ceci donne 
+Enfin, Nordhaus estime que le coût de l'investissement $\alpha_n$ dans les technologies bas carbone s'exprime comme $0,0686 \mu_n^{2,887}$. Pour simplifier, on pose $\alpha_n = 0,05\mu_n^3$.
+\ques{Donner une expression simplifiée de  $\Omega_n$ en fonction de $\mu_n$ et $T_n$.}
+\rep{
 \begin{equation*}
 \Omega_n = \frac{1-0,05\mu_n^3}{1+0,0133 (\frac{T_n}{3})^2}
 \end{equation*}
+}
 
 \section*{\sc Scénario contrôle total}
 On considère dans cette partie un scénario où l'on décide de contrôler totalement les émissions : $\forall n, \mu_n=1$.
@@ -196,19 +199,19 @@ On considère dans cette partie un scénario où l'on décide de contrôler tota
 \ques{Simplifier l'équation de la question \ref{ques:dynamique_K_1} pour obtenir une relation entre $K_n$, $K_{n-1}$ et $\delta$.\label{ques:dynamique_K_2} }
 \rep{
 \begin{equation*}
-\forall n, \quad \Omega_n = \frac{1-0,05}{1+0,0133 (\frac{T_0}{3})}^2=\frac{0,95}{1,000945778}=0,9491
+\forall n, \quad \Omega_n = \frac{1-0,05}{1+0,0133 (\frac{T_0}{3})}=\frac{0,95}{1,000945778}=0,9491
 \end{equation*}
 \begin{equation*}
-\forall n, \quad  K_n = \frac{1- \delta}{1- 0,2373 A} K_{n-1}
+\forall n, \quad  K_n  =\frac{1- \delta}{1- \frac{0,9491}{4} } K_{n-1} =\frac{1- \delta}{1- 0,2373 } K_{n-1} = \frac{1- \delta}{0,7627} K_{n-1}
 \end{equation*}
 }
 
 \ques{Comment peut-on qualifier mathématiquement la suite $(K_n)_{n\in \NN}$ ? \label{ques:suite_geo}}
-\rep{$(K_n)_{n\in \NN}$ est une suite géométrique de raison $\frac{1- \delta}{1- 0,2373}$.}
+\rep{$(K_n)_{n\in \NN}$ est une suite géométrique de raison $\frac{1- \delta}{0,7627}$.}
 
 \ques{Calculer $K_n$ pour tout $n$, en fonction de $K_0$ et $\delta$.}
 \rep{\begin{equation*}
-\forall n, \quad  K_n = K_0 \left(\frac{1- \delta}{1- 0,2373}\right)^n 
+\forall n, \quad  K_n = K_0 \left(\frac{1- \delta}{0,7627}\right)^n 
 \end{equation*}}
 
 \section*{\sc Scénario sans contrôle}
@@ -229,25 +232,33 @@ On suppose que le terme $d_n$ est petit ; un développement limité permet de si
 \begin{equation*} 
 K_n=\frac{4}{3}(1- \delta)\left(1-\frac{d_n}{3}\right) K_{n-1}.
 \end{equation*}
-Rappelons que dans le cas d'un contrôle total, la croissance du capital est géométrique de raison 
-$$
-r_\star = \frac{K_n}{K_{n-1}} = \frac{1- \delta}{1- 0,2373}.
-$$
-Dans cette partie, on suppose que la stratégie du planificateur est la suivante. Tant que la croissance du capital $r_n = K_n / K_{n-1}$ est supérieure à la croissance $r_\star$ obtenue quand le contrôle est total, on ne fait rien$\,$; en revanche, dès que $r_n \leqslant r_\star$, on contrôle totalement. Autrement dit, on suppose que
+
+Dans cette partie, on propose une ``heuristique" pour le planificateur, c'est-à-dire une stratégie simple qui fonctionne mieux que des stratégies naïves mais sans être optimale pour autant. On suppose que l'heuristique uilisée par le planificateur est la suivante. Tant que la croissance du capital $r_n = K_n / K_{n-1}$ est supérieure une constante $r_\star$, on ne fait rien$\,$; en revanche, dès que $r_n \leqslant r_\star$, on contrôle totalement. Autrement dit, on suppose que
 $$
  \mu_n = 0 \quad \text{si} \quad r_n > r_\star \quad \text{et} \quad \mu_n = 1 \quad \text{sinon.}
 $$
+
+\ques{Proposer une valeur de $r_\star$ cohérente pour maximiser la croissance du capital $K^n$.}
+\rep{
+On propose de prendre $r_\star$ comme la raison de la suite géométrique définissant la croissance du capital dans le cas d'un contrôle total :
+$$
+r_\star := \frac{K_n}{K_{n-1}} = \frac{1- \delta}{0,7627}.
+$$
+}
+
 
 \ques{Montrer que cette stratégie amène à contrôler totalement si et seulement si $d_n \geqslant 0.05.$}
 \rep{On choisit de contrôler les émissions lorsque le facteur multiplicatif du scénario contrôlé est supérieur au scénario non contrôlé :
 \begin{equation*}
 \begin{aligned}
-&(1-\delta)\frac{4}{3}\left(1-\frac{d_n}{3}\right) < \frac{1-\delta}{1-0,2373} \\
+&(1-\delta)\frac{4}{3}\left(1-\frac{d_n}{3}\right) < \frac{1-\delta}{0,7627} \\
 \text{ssi} \quad &1-\frac{d_n}{3} < \frac{3}{4}\times \frac{1}{0,7627} \\
 \text{ssi} \quad &0,05 = 3-\frac{9}{4 \times 0,7627} < d_n
 \end{aligned}
 \end{equation*}
 }
+
+
 
 \ques{Avec la fonction dégât de Nordhaus obtenue à la question \ref{ques:degat_nordhaus}, déterminer la température en dessous de laquelle la stratégie suggère de ne pas intervenir.}
 \rep{Lecture graphique ou calculer $3\times \sqrt{0,05/0,0133}=5,8$ °C.}
